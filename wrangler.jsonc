@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ratas-landing",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-25",
+  "compatibility_flags": ["nodejs_compat"]
+  // Custom domain gắn sau: app landing -> ratas.ai (Dashboard > Domains & Routes)
+  // Assets tĩnh (khi cần): thêm "assets": { "directory": "./public" }
+}
