@@ -1,9 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ratas-landing",
-  "main": "src/index.ts",
   "compatibility_date": "2026-09-25",
-  "compatibility_flags": ["nodejs_compat"]
-  // Custom domain gắn sau: app landing -> ratas.ai (Dashboard > Domains & Routes)
-  // Assets tĩnh (khi cần): thêm "assets": { "directory": "./public" }
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist/client"
+  }
+  // Hiện mọi trang static → chỉ serve assets, chưa có Worker.
+  // Khi thêm route cần server (export const prerender = false), Astro sinh dist/_worker.js/index.js
+  // → thêm: "main": "./dist/_worker.js/index.js"  (Cloudflare serve asset trước, fallback Worker).
+  // Custom domain ratas.ai gắn ở Dashboard > Domains & Routes.
 }

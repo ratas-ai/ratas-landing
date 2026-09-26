@@ -1,23 +1,10 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    // TS 6/7: types default = [] -> PHẢI khai tường minh, nếu không mất workers-types
-    "types": ["@cloudflare/workers-types"],
-
-    // Khai rõ (không dựa default) — tránh bất ngờ khi TS đổi default
-    "target": "es2022",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "lib": ["es2022"],
-
-    "strict": true,
-    "skipLibCheck": true,
-    "noEmit": true,
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-
-    // Hono JSX (khi cần render HTML bằng JSX). Không dùng cũng vô hại.
     "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
+    "jsxImportSource": "react",
+    "types": ["@cloudflare/workers-types", "astro/client"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", ".wrangler"]
 }
