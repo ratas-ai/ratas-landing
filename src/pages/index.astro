@@ -1,13 +1,33 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CircuitBackground from "../components/CircuitBackground.astro";
 import Hero from "../components/Hero.tsx";
+import ThemeSwitcher from "../components/ThemeSwitcher.tsx";
 ---
 
 <Layout>
-  <Hero client:load />
+  <CircuitBackground />
 
-  <nav>
-    <a href="/about">About</a>
-    <a href="/docs">Docs</a>
+  <!-- NAV -->
+  <nav
+    class="sticky top-0 z-50 h-14 flex items-center gap-6 px-6 sm:px-8 bg-surface/95 backdrop-blur border-b border-line"
+  >
+    <a href="/" class="flex items-center gap-2 no-underline">
+      <span class="text-brand">🐿️</span>
+      <span class="font-sans font-bold text-sm uppercase tracking-wider text-primary">ratas</span>
+    </a>
+    <div class="hidden md:flex gap-6 font-sans text-[11px] uppercase tracking-wider">
+      <a href="#platform" class="text-secondary hover:text-brand no-underline">/platform</a>
+      <a href="#agents" class="text-secondary hover:text-brand no-underline">/agents</a>
+      <a href="/docs" class="text-secondary hover:text-brand no-underline">/docs</a>
+    </div>
+    <div class="ml-auto flex items-center gap-4">
+      <ThemeSwitcher client:load />
+    </div>
   </nav>
+
+  <!-- CONTENT -->
+  <main class="relative z-10 max-w-5xl mx-auto px-6 sm:px-8">
+    <Hero client:load />
+  </main>
 </Layout>

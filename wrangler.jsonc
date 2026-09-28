@@ -5,9 +5,8 @@
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./dist/client"
+  },
+  "observability": {
+    "enabled": true
   }
-  // Hiện mọi trang static → chỉ serve assets, chưa có Worker.
-  // Khi thêm route cần server (export const prerender = false), Astro sinh dist/_worker.js/index.js
-  // → thêm: "main": "./dist/_worker.js/index.js"  (Cloudflare serve asset trước, fallback Worker).
-  // Custom domain ratas.ai gắn ở Dashboard > Domains & Routes.
 }

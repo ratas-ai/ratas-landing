@@ -1,0 +1,110 @@
+---
+/**
+ * Circuit background — grid + animated signal traces.
+ * Ported from phase0 landing HTML. Theme-aware: uses --color-brand token,
+ * so it recolors per theme automatically. Pure CSS/SVG, zero JS.
+ */
+const traces = [
+  "M84,0 L84,100 L112,116 L112,250 L84,266 L84,400 L112,416 L112,550 L84,566 L84,900",
+  "M196,0 L196,66 L224,82 L224,200 L196,216 L196,350 L224,366 L224,500 L196,516 L196,650 L224,666 L224,900",
+  "M336,0 L336,150 L364,166 L364,300 L336,316 L336,450 L364,466 L364,600 L336,616 L336,900",
+  "M448,0 L448,50 L476,66 L476,182 L448,198 L448,332 L476,348 L476,500 L448,516 L448,700 L476,716 L476,900",
+  "M588,0 L588,116 L616,132 L616,282 L588,298 L588,450 L616,466 L616,600 L588,616 L588,900",
+  "M700,0 L700,82 L728,98 L728,232 L700,248 L700,382 L728,398 L728,550 L700,566 L700,732 L728,748 L728,900",
+  "M812,0 L812,132 L840,148 L840,298 L812,314 L812,466 L840,482 L840,632 L812,648 L812,900",
+  "M952,0 L952,66 L980,82 L980,216 L952,232 L952,400 L980,416 L980,566 L952,582 L952,900",
+  "M1064,0 L1064,100 L1092,116 L1092,266 L1064,282 L1064,432 L1092,448 L1092,600 L1064,616 L1064,900",
+  "M1176,0 L1176,150 L1204,166 L1204,332 L1176,348 L1176,516 L1204,532 L1204,700 L1176,716 L1176,900",
+  "M1288,0 L1288,82 L1316,98 L1316,248 L1288,264 L1288,432 L1316,448 L1316,616 L1288,632 L1288,900",
+  "M1372,0 L1372,132 L1344,148 L1344,300 L1372,316 L1372,482 L1344,498 L1344,666 L1372,682 L1372,900",
+];
+const dashes = [50, 85, 35, 70, 45, 100, 40, 75, 55, 90, 60, 80];
+---
+
+<div class="rata-bg" aria-hidden="true">
+  <div class="rata-grid"></div>
+  <div class="rata-circuit">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="none">
+      {traces.map((d) => <path class="trace" d={d}></path>)}
+      {
+        traces.map((d, i) => (
+          <path
+            class="signal"
+            d={d}
+            style={`animation-delay:${(i * 0.6).toFixed(1)}s; stroke-dasharray:${dashes[i]} 800`}
+          ></path>
+        ))
+      }
+    </svg>
+  </div>
+</div>
+
+<style>
+  .rata-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  /* grid — brand orange, always visible */
+  .rata-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(240, 101, 47, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240, 101, 47, 0.08) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .rata-circuit {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation: rata-fade 2s ease forwards 0.5s;
+  }
+  .rata-circuit svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .trace {
+    fill: none;
+    stroke: rgba(240, 101, 47, 0.1);
+    stroke-width: 0.8;
+  }
+  .signal {
+    fill: none;
+    stroke: rgba(240, 101, 47, 0.45);
+    stroke-width: 1;
+    opacity: 0;
+    animation: rata-signal 8s linear infinite;
+  }
+  @keyframes rata-fade {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes rata-signal {
+    0% {
+      stroke-dashoffset: 860;
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: -860;
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .signal {
+      animation: none;
+      opacity: 0;
+    }
+  }
+</style>

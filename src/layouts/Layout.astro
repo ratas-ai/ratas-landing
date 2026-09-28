@@ -1,13 +1,20 @@
 ---
+import "../styles/global.css";
+
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const {
   title = "Ratas — agentic AI platform",
   description = "One prompt, a whole ecosystem. The agent lives inside.",
+  image = "/og-default.png",
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -15,10 +22,60 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Anti-FOUC (mode): set color-scheme on <html> before paint. Theme goes on <body> (Astryx @scope). -->
+    <script is:inline>
+      (function () {
+        var m = localStorage.getItem("ratas-mode") || "light";
+        document.documentElement.setAttribute("data-mode", m);
+      })();
+    </script>
+
+    <!-- Fonts (Astryx sets font-family only; we load the files) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Saira+Semi+Condensed:wght@300;400;500;600;700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+    />
+
+    <!-- Theme token sets (all 4 loaded once; scoped by [data-astryx-theme], switched at runtime) -->
+    <link rel="stylesheet" href="/themes/paper.css" />
+    <link rel="stylesheet" href="/themes/cyber.css" />
+    <link rel="stylesheet" href="/themes/folio.css" />
+    <link rel="stylesheet" href="/themes/sand.css" />
+
+    <!-- Primary meta -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- OpenGraph (Facebook, LinkedIn, Slack...) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Ratas" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
   </head>
-  <body>
+  <body data-astryx-theme="paper" data-mode="light">
+    <!-- Anti-FOUC (theme): set theme on <body> before content paints. -->
+    <script is:inline>
+      (function () {
+        var t = localStorage.getItem("ratas-theme") || "paper";
+        var m = localStorage.getItem("ratas-mode") || "light";
+        document.body.setAttribute("data-astryx-theme", t);
+        document.body.setAttribute("data-mode", m);
+      })();
+    </script>
     <slot />
     <footer>
       <p>🐿️ Powered by Cloudflare</p>

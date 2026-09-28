@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/*
+ * Theme token sets (paper/cyber/folio/sand.css, scoped by [data-astryx-theme])
+ * are loaded at runtime via <link> in Layout.astro — NOT bundled here, because
+ * they live in /public/themes and switch live. This file only maps their vars
+ * into Tailwind utilities.
+ */
+
+/*
+ * Map Astryx CSS variables → Tailwind v4 theme, so we get utility classes
+ * (bg-brand, text-primary, p-4, rounded-container...) that resolve to the
+ * ACTIVE theme's token values at runtime. Switching [data-astryx-theme] or
+ * color-scheme re-cascades every var → classes update instantly, no rebuild.
+ */
+@theme inline {
+  /* Tailwind utility keys → Astryx runtime vars. Key names match markup classes. */
+  --color-brand: var(--color-brand);
+  --color-brand-solid: var(--color-brand-solid);
+  --color-on-brand: var(--color-on-brand);
+  --color-on-accent: var(--color-on-accent);
+  --color-body: var(--color-background-body);
+  --color-surface: var(--color-background-surface);
+  --color-card: var(--color-background-card);
+  --color-primary: var(--color-text-primary);
+  --color-secondary: var(--color-text-secondary);
+  --color-line: var(--color-border);
+  --color-ok: var(--color-success);
+  --color-err: var(--color-error);
+
+  --font-sans: var(--font-family-body);
+  --font-mono: var(--font-family-code);
+
+  --radius-box: var(--radius-container);
+  --radius-el: var(--radius-element);
+}
+
+/* Mode control: force color-scheme so Astryx light-dark() follows OUR toggle,
+   not the OS. Driven by data-mode on <html> (set by anti-FOUC script). */
+:root,
+html[data-mode="light"] {
+  color-scheme: light;
+}
+html[data-mode="dark"] {
+  color-scheme: dark;
+}
+
+/* Smooth theme/mode transitions (wow, but only colors — keep it cheap) */
+@media (prefers-reduced-motion: no-preference) {
+  :where(body, body *) {
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease;
+  }
+}
+
+/* Fonts are driven per-theme by Astryx (--font-family-body / --font-family-code),
+   scoped by [data-astryx-theme]. Switching theme re-cascades the font too.
+   Fallbacks below apply before any theme attribute resolves. */
+:root {
+  --rata-font: "Inter", -apple-system, system-ui, sans-serif;
+  --rata-font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+body {
+  background-color: var(--color-background-body);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body, var(--rata-font));
+  margin: 0;
+  min-height: 100vh;
+}
