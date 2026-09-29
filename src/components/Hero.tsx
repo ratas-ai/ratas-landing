@@ -1,24 +1,104 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useBinaryFlicker, useTerminalBoot, type BootLine } from "../hooks";
+
+const BOOT_LINES: BootLine[] = [
+  {
+    prefix: "$ loading",
+    label: "snippet",
+    status: "OK",
+    color: "var(--color-data-categorical-cyan)",
+  },
+  {
+    prefix: "$ loading",
+    label: "widget",
+    status: "OK",
+    color: "var(--color-data-categorical-green)",
+  },
+  {
+    prefix: "$ loading",
+    label: "gadget",
+    status: "OK",
+    color: "var(--color-data-categorical-purple)",
+  },
+  {
+    prefix: "$ loading",
+    label: "workflow",
+    status: "OK",
+    color: "var(--color-data-categorical-blue)",
+  },
+  {
+    prefix: "$ waking",
+    label: "rata agent 🐿️",
+    status: "READY",
+    color: "var(--color-brand)",
+  },
+];
 
 export default function Hero() {
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
+  const [ecosystem, reveal] = useBinaryFlicker("ecosystem");
+  const { visible, done, play: boot } = useTerminalBoot(BOOT_LINES, 300);
+  const scrambledAfterBoot = useRef(false);
+
+  // run the boot sequence once on mount
+  useEffect(() => {
+    boot();
+  }, []);
+
+  // when boot finishes, reveal the headline (once)
+  useEffect(() => {
+    if (done && !scrambledAfterBoot.current) {
+      scrambledAfterBoot.current = true;
+      reveal();
+    }
+  }, [done]);
 
   return (
     <section className="hero-grid grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center py-20 sm:py-28">
       {/* text */}
       <div>
+        {/* terminal boot log */}
+        <div className="font-mono text-[11px] leading-relaxed mb-6 min-h-[120px] max-w-xs">
+          {visible.map((line, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <span className="text-secondary">{line.prefix}</span>
+              <span
+                className="font-semibold"
+                style={{ color: line.color ?? "var(--color-text-primary)" }}
+              >
+                {line.label}
+              </span>
+              {line.status && (
+                <span className="text-brand ml-auto">[{line.status}]</span>
+              )}
+            </div>
+          ))}
+          {!done && (
+            <span className="inline-block w-2 h-3.5 bg-brand animate-pulse align-middle" />
+          )}
+        </div>
+
         <h1 className="font-bold uppercase leading-[1.15] tracking-tight text-primary mb-5 text-3xl sm:text-5xl">
-          Your docs.
-          <br />
-          Your <span className="text-brand">agents</span>.<br />
-          Total recall.
+          One prompt.
+          <br />A whole{" "}
+          <span
+            className="relative inline-block text-brand cursor-default align-baseline"
+            onMouseEnter={reveal}
+          >
+            {/* invisible placeholder reserves the final word's width in the
+                current theme font, so scrambled glyphs never shift layout */}
+            <span aria-hidden="true" className="invisible">
+              ecosystem
+            </span>
+            <span className="absolute inset-0">{ecosystem}</span>
+          </span>
+          .
         </h1>
 
         <p className="text-secondary text-sm leading-[1.9] max-w-lg mb-9">
-          Persistent AI agents for individuals and teams. Upload anything. Chat
-          with context. Let a Rata agent 🐿️ decode your knowledge. On-edge.
-          Private.
+          Describe what you want in plain language; the agent builds it, runs
+          it, and keeps it working. Private.
         </p>
 
         {/* CTA / waitlist */}

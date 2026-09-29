@@ -7,16 +7,32 @@ const THEMES = [
   { id: "sand", label: "Sand" },
 ] as const;
 
-type Mode = "light" | "dark";
+/** Astryx supports three modes:
+ *   system → no data-theme (:root color-scheme: light dark → follows OS)
+ *   light  → html[data-theme="light"]
+ *   dark   → html[data-theme="dark"]
+ */
+type Mode = "system" | "light" | "dark";
 
-/** Apply theme/mode. Theme goes on <body> (Astryx @scope needs an ancestor
- * that is NOT the scope-limit element; <html> would self-cancel the donut scope).
- * Mode goes on <html> so global.css color-scheme rules drive light-dark(). */
+const MODES: { id: Mode; label: string }[] = [
+  { id: "system", label: "🖥 system" },
+  { id: "light", label: "☀ light" },
+  { id: "dark", label: "🌙 dark" },
+];
+
+/** Apply theme + mode.
+ * Theme (paper/cyber/…) goes on <body> — Astryx @scope needs an ancestor that
+ * is not the scope-limit element (<html> would self-cancel the donut scope).
+ * Mode goes on <html> as Astryx's own `data-theme` attribute; "system" removes
+ * it so Astryx's `:root { color-scheme: light dark }` follows the OS. */
 function apply(theme: string, mode: Mode) {
   const run = () => {
     document.body.setAttribute("data-astryx-theme", theme);
-    document.body.setAttribute("data-mode", mode);
-    document.documentElement.setAttribute("data-mode", mode);
+    if (mode === "system") {
+      document.documentElement.removeAttribute("data-theme");
+    } else {
+      document.documentElement.setAttribute("data-theme", mode);
+    }
   };
   if (document.startViewTransition) document.startViewTransition(run);
   else run();
@@ -24,12 +40,12 @@ function apply(theme: string, mode: Mode) {
 
 export default function ThemeSwitcher() {
   const [theme, setTheme] = useState("paper");
-  const [mode, setMode] = useState<Mode>("light");
+  const [mode, setMode] = useState<Mode>("system");
 
-  // hydrate from localStorage (set by anti-FOUC script)
+  // hydrate from localStorage (defaults set by anti-FOUC script)
   useEffect(() => {
     setTheme(localStorage.getItem("ratas-theme") || "paper");
-    setMode((localStorage.getItem("ratas-mode") as Mode) || "light");
+    setMode((localStorage.getItem("ratas-mode") as Mode) || "system");
   }, []);
 
   function pickTheme(id: string) {
@@ -37,11 +53,11 @@ export default function ThemeSwitcher() {
     localStorage.setItem("ratas-theme", id);
     apply(id, mode);
   }
-  function toggleMode() {
-    const next: Mode = mode === "light" ? "dark" : "light";
-    setMode(next);
-    localStorage.setItem("ratas-mode", next);
-    apply(theme, next);
+
+  function pickMode(id: Mode) {
+    setMode(id);
+    localStorage.setItem("ratas-mode", id);
+    apply(theme, id);
   }
 
   return (
@@ -56,20 +72,32 @@ export default function ThemeSwitcher() {
           className={
             "font-mono text-xs px-3 py-1.5 rounded-el border cursor-pointer transition-colors " +
             (theme === t.id
-              ? "bg-brand text-on-accent border-brand"
+              ? "bg-brand text-on-brand border-brand"
               : "bg-transparent text-secondary border-line hover:border-brand")
           }
         >
           {t.label}
         </button>
       ))}
-      <button
-        onClick={toggleMode}
-        className="font-mono text-xs px-3 py-1.5 rounded-el border border-line text-secondary hover:border-brand cursor-pointer"
-        aria-label="Toggle light/dark"
-      >
-        {mode === "light" ? "🌙 dark" : "☀️ light"}
-      </button>
+
+      <span className="font-mono text-xs text-secondary uppercase tracking-wider ml-2">
+        mode:
+      </span>
+      {MODES.map((m) => (
+        <button
+          key={m.id}
+          onClick={() => pickMode(m.id)}
+          aria-pressed={mode === m.id}
+          className={
+            "font-mono text-xs px-3 py-1.5 rounded-el border cursor-pointer transition-colors " +
+            (mode === m.id
+              ? "bg-brand text-on-brand border-brand"
+              : "bg-transparent text-secondary border-line hover:border-brand")
+          }
+        >
+          {m.label}
+        </button>
+      ))}
     </div>
   );
 }

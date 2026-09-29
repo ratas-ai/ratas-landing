@@ -45,6 +45,8 @@ export const folioTheme = defineTheme({
     "--color-brand": "light-dark(#E0531A, #F0652F)",
     "--color-brand-solid": "light-dark(#C7451B, #F0652F)",
     "--color-on-brand": "light-dark(#FFFFFF, #1A0F00)",
+    "--icon-stroke": "1.5",
+    "--icon-join": "miter",
   },
 });
 

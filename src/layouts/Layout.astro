@@ -24,11 +24,14 @@ const ogImage = new URL(image, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Anti-FOUC (mode): set color-scheme on <html> before paint. Theme goes on <body> (Astryx @scope). -->
+    <!-- Anti-FOUC (mode): set Astryx data-theme on <html> before paint.
+         "system" → no attribute (Astryx :root color-scheme follows OS). -->
     <script is:inline>
       (function () {
-        var m = localStorage.getItem("ratas-mode") || "light";
-        document.documentElement.setAttribute("data-mode", m);
+        var m = localStorage.getItem("ratas-mode") || "system";
+        if (m === "light" || m === "dark") {
+          document.documentElement.setAttribute("data-theme", m);
+        }
       })();
     </script>
 
@@ -37,7 +40,7 @@ const ogImage = new URL(image, Astro.site);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Saira+Semi+Condensed:wght@300;400;500;600;700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Saira+Semi+Condensed:wght@300;400;500;600;700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500;700&family=Bitter:wght@400;500;600;700&display=swap"
     />
 
     <!-- Theme token sets (all 4 loaded once; scoped by [data-astryx-theme], switched at runtime) -->
@@ -66,14 +69,12 @@ const ogImage = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
   </head>
-  <body data-astryx-theme="paper" data-mode="light">
-    <!-- Anti-FOUC (theme): set theme on <body> before content paints. -->
+  <body data-astryx-theme="paper">
+    <!-- Anti-FOUC (theme): set the active Astryx theme on <body> before paint. -->
     <script is:inline>
       (function () {
         var t = localStorage.getItem("ratas-theme") || "paper";
-        var m = localStorage.getItem("ratas-mode") || "light";
         document.body.setAttribute("data-astryx-theme", t);
-        document.body.setAttribute("data-mode", m);
       })();
     </script>
     <slot />
