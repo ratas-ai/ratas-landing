@@ -1,0 +1,116 @@
+---
+/**
+ * ConceptSection — one Norse-creature section.
+ * Header zone = animal SVG icon (currentColor → theme) + title + description.
+ * Body = a <slot /> for the related service/provider cards (filled in later).
+ *
+ * The icon plays a "morph" animation (solid creature → glowing wireframe line)
+ * the first time the section scrolls into view (IntersectionObserver adds
+ * `.in-view`). Chrome uses Astryx tokens so every theme restyles it.
+ */
+interface Props {
+  /** Raw SVG markup for the animal icon (paths carry class="draw"). */
+  icon: string;
+  /** Small creature label, e.g. "🦅 Veðrfölnir". */
+  kicker?: string;
+  /** Section title, e.g. "Connectors". */
+  title: string;
+  /** One-line value statement (optional; not rendered currently). */
+  tagline?: string;
+  /** Supporting description. */
+  desc: string;
+}
+
+const { icon, kicker, title, desc } = Astro.props;
+---
+
+<section class="concept-section py-16">
+  <header class="flex items-start gap-6 mb-8">
+    <span
+      class="concept-icon text-brand h-24 w-24 shrink-0 [&>svg]:h-full [&>svg]:w-full"
+      set:html={icon}
+    />
+    <div>
+      {
+        kicker && (
+          <p class="font-mono text-[11px] uppercase tracking-wider text-secondary mb-1">
+            {kicker}
+          </p>
+        )
+      }
+      <h2 class="text-2xl font-bold text-primary mb-2">{title}</h2>
+      <p class="text-sm text-secondary leading-relaxed max-w-xl">{desc}</p>
+    </div>
+  </header>
+
+  <!-- related service/provider cards go here -->
+  <slot />
+</section>
+
+<style>
+  /* Morph: solid creature (fill) → glowing wireframe line.
+     Reference: section-test.html. Reversed here — starts solid, animates to
+     line art when the section enters the viewport. */
+  .concept-icon :global(.draw) {
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 0;
+    fill-opacity: 1;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  /* Play only once the section is scrolled into view. */
+  .concept-section.in-view .concept-icon :global(.draw) {
+    animation: concept-morph 2.2s ease forwards;
+  }
+  .concept-section.in-view .concept-icon :global(svg) {
+    animation: concept-glow 2.2s ease forwards;
+  }
+
+  @keyframes concept-morph {
+    0% {
+      fill-opacity: 1;
+      stroke-width: 0;
+    }
+    100% {
+      fill-opacity: 0.12;
+      stroke-width: 4;
+    }
+  }
+  @keyframes concept-glow {
+    0% {
+      filter: drop-shadow(0 0 0 transparent);
+    }
+    100% {
+      filter: drop-shadow(0 0 3px currentColor);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .concept-icon :global(.draw) {
+      fill-opacity: 0.12;
+      stroke-width: 4;
+    }
+    .concept-section.in-view .concept-icon :global(.draw),
+    .concept-section.in-view .concept-icon :global(svg) {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // Toggle the morph animation each time a section enters the viewport,
+  // and reset to the initial (solid) state when it scrolls out — so the
+  // animation replays on every scroll-through.
+  const sections = document.querySelectorAll(".concept-section");
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        entry.target.classList.toggle("in-view", entry.isIntersecting);
+      }
+    },
+    { threshold: 0.35 },
+  );
+  sections.forEach((s) => io.observe(s));
+</script>

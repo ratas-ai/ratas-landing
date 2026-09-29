@@ -1,0 +1,60 @@
+---
+/**
+ * The 5 Norse-creature sections, in landing order (per LANDING_CONTENT.md):
+ * Rata agent 🐿️ · Connectors 🦅 · Gatekeeper 🐺 · Primitives 🦌 · Runtime 🐉
+ *
+ * Each section's <slot> is left empty for now — the related service/provider
+ * cards (Slack, GitHub, Snippet/Widget/…, etc.) will be added later.
+ */
+import ConceptSection from "./ConceptSection.astro";
+import squirrel from "../assets/animals/squirrel.svg?raw";
+import eagle from "../assets/animals/eagle.svg?raw";
+import wolf from "../assets/animals/wolf.svg?raw";
+import deer from "../assets/animals/deer.svg?raw";
+import dragon from "../assets/animals/dragon.svg?raw";
+---
+
+<ConceptSection
+  icon={squirrel}
+  kicker="Ratatoskr"
+  title="Rata agent"
+  tagline="Agent sống bên trong."
+  {/* VI: Agent sống bên trong. Nhớ ngữ cảnh, học từ hành vi, sinh code và tự vận hành. */}
+  desc="An agent that lives inside. It remembers context, learns from behavior, writes code, and runs on its own."
+/>
+
+<ConceptSection
+  icon={eagle}
+  kicker="Veðrfölnir"
+  title="Connectors"
+  tagline="Agent giao tiếp ra ngoài."
+  {/* VI: Agent giao tiếp ra ngoài. Gửi/nhận tin qua kênh bạn dùng. */}
+  desc="Your agent reaches the outside world — sending and receiving messages through the channels you already use."
+/>
+
+<ConceptSection
+  icon={wolf}
+  kicker="Fenrir"
+  title="Gatekeepers"
+  tagline="Agent truy cập công cụ của bạn."
+  {/* VI: Agent truy cập công cụ của bạn — có kiểm soát, đúng quyền bạn cấp. */}
+  desc="Your agent accesses your tools — controlled, and only with the permissions you grant."
+/>
+
+<ConceptSection
+  icon={deer}
+  kicker="Four Stags"
+  title="Primitives"
+  tagline="Một prompt → 4 khối xây nên mọi thứ."
+  {/* VI: Snippet · Widget · Gadget · Workflow — composable, ghép lại thành cả hệ thống. */}
+  desc="Snippet · Widget · Gadget · Workflow — composable building blocks that combine into a whole system."
+/>
+
+<ConceptSection
+  icon={dragon}
+  kicker="Níðhöggr"
+  title="Runtime and inferences"
+  tagline="Ở gốc rễ — nơi mọi thứ thật sự CHẠY."
+  {/* VI: Deploy, versioning, mở rộng theo yêu cầu, chạy inference đa mô hình, và nhiều thứ khác — tất cả đều trong Ratas Runtime. */}
+  desc="Deploy, versioning, on-demand scaling, multi-model inference, and more — all inside the Ratas Runtime."
+/>

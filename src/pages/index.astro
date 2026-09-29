@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import CircuitBackground from "../components/CircuitBackground.astro";
 import Hero from "../components/Hero.tsx";
+import ConceptSections from "../components/ConceptSections.astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.tsx";
 ---
 
@@ -29,5 +30,6 @@ import ThemeSwitcher from "../components/ThemeSwitcher.tsx";
   <!-- CONTENT -->
   <main class="relative z-10 max-w-5xl mx-auto px-6 sm:px-8">
     <Hero client:load />
+    <ConceptSections />
   </main>
 </Layout>

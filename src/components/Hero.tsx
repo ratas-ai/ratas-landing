@@ -37,7 +37,7 @@ const BOOT_LINES: BootLine[] = [
 export default function Hero() {
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
-  const [ecosystem, reveal] = useBinaryFlicker("ecosystem");
+  const [agent, reveal] = useBinaryFlicker("AI Agent");
   const { visible, done, play: boot } = useTerminalBoot(BOOT_LINES, 300);
   const scrambledAfterBoot = useRef(false);
 
@@ -80,20 +80,23 @@ export default function Hero() {
         </div>
 
         <h1 className="font-bold uppercase leading-[1.15] tracking-tight text-primary mb-5 text-3xl sm:text-5xl">
-          One prompt.
-          <br />A whole{" "}
+          Your{" "}
           <span
             className="relative inline-block text-brand cursor-default align-baseline"
             onMouseEnter={reveal}
           >
-            {/* invisible placeholder reserves the final word's width in the
-                current theme font, so scrambled glyphs never shift layout */}
-            <span aria-hidden="true" className="invisible">
-              ecosystem
+            {/* invisible placeholder reserves the word's width in the current
+                theme font, so scrambled glyphs never shift layout */}
+            <span aria-hidden="true" className="invisible whitespace-nowrap">
+              AI Agent
             </span>
-            <span className="absolute inset-0">{ecosystem}</span>
+            <span className="absolute inset-0 whitespace-nowrap tabular-nums">
+              {agent}
+            </span>
           </span>
-          .
+          ,
+          <br />
+          your <span className="">ecosystem</span>.
         </h1>
 
         <p className="text-secondary text-sm leading-[1.9] max-w-lg mb-9">
