@@ -7,6 +7,15 @@
  * cards (Slack, GitHub, Snippet/Widget/…, etc.) will be added later.
  */
 import ConceptSection from "./ConceptSection.astro";
+import FeatureCard from "./FeatureCard.astro";
+import memoryIcon from "../assets/icons/memory.svg?raw";
+import durabilityIcon from "../assets/icons/durability.svg?raw";
+import toolsIcon from "../assets/icons/tools.svg?raw";
+import proactiveIcon from "../assets/icons/proactive.svg?raw";
+import telegramIcon from "../assets/icons/telegram.svg?raw";
+import whatsappIcon from "../assets/icons/whatsapp.svg?raw";
+import slackIcon from "../assets/icons/slack.svg?raw";
+import zaloIcon from "../assets/icons/zalo.svg?raw";
 import squirrel from "../assets/animals/squirrel.svg?raw";
 import eagle from "../assets/animals/eagle.svg?raw";
 import wolf from "../assets/animals/wolf.svg?raw";
@@ -21,7 +30,32 @@ import dragon from "../assets/animals/dragon.svg?raw";
   tagline="Agent sống bên trong."
   {/* VI: Agent sống bên trong. Nhớ ngữ cảnh, học từ hành vi, sinh code và tự vận hành. */}
   desc="An agent that lives inside. It remembers context, learns from behavior, writes code, and runs on its own."
-/>
+>
+  {/* 4 agent-harness capabilities — Cloudflare Think standard */}
+  <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
+    <FeatureCard
+      icon={memoryIcon}
+      title="Memory"
+      desc="The agent's soul — it remembers facts and keeps long conversations intact, forgetting nothing."
+    />
+    <FeatureCard
+      icon={durabilityIcon}
+      title="Durability"
+      desc="Retry-safe turns that resume where they dropped, and actions that pause and continue later."
+    />
+    <FeatureCard
+      icon={toolsIcon}
+      title="Tools & Actions"
+      desc="Workspace, code, browser, and MCP tools — with approval gates and run-once safety."
+    />
+    <FeatureCard
+      icon={proactiveIcon}
+      title="Always-on"
+      desc="Scheduled tasks and proactive turns let it act on its own — across web, chat, and voice."
+      disabled
+    />
+  </div>
+</ConceptSection>
 
 <ConceptSection
   icon={eagle}
@@ -30,7 +64,35 @@ import dragon from "../assets/animals/dragon.svg?raw";
   tagline="Agent giao tiếp ra ngoài."
   {/* VI: Agent giao tiếp ra ngoài. Gửi/nhận tin qua kênh bạn dùng. */}
   desc="Your agent reaches the outside world — sending and receiving messages through the channels you already use."
-/>
+>
+  {/* Messaging channels — icons added later */}
+  <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
+    <FeatureCard
+      icon={telegramIcon}
+      title="Telegram"
+      desc="Chat with your agent and get replies right inside Telegram."
+    />
+    <FeatureCard
+      icon={slackIcon}
+      title="Slack"
+      desc="Bring the agent into your workspace channels and DMs."
+    />
+    <FeatureCard
+      icon={whatsappIcon}
+      title="WhatsApp"
+      desc="Reach your agent on the messenger your customers already use."
+      disabled
+    />
+    <FeatureCard
+      icon={zaloIcon}
+      title="Zalo"
+      desc="Connect with your agent over Zalo for local reach."
+    />
+  </div>
+  <p class="mt-6 font-mono text-[11px] uppercase tracking-wider text-secondary">
+    // and more
+  </p>
+</ConceptSection>
 
 <ConceptSection
   icon={wolf}

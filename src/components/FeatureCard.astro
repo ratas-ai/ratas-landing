@@ -1,0 +1,112 @@
+---
+/**
+ * FeatureCard — one capability/feature entry inside a concept section.
+ * Bordered card (Astryx tokens) with a diagonal "sheen" that sweeps across on
+ * hover. Cards stretch to equal height in the grid. The description carries a
+ * short FILLED accent bar on its first line only (::before), rounded with the
+ * element radius token.
+ *
+ * `disabled` → dimmed, no sheen, "soon" badge.
+ */
+interface Props {
+  /** Card title. */
+  title: string;
+  /** Short description. */
+  desc: string;
+  /** Optional raw SVG icon (rendered top-left). */
+  icon?: string;
+  /** Coming-soon / unavailable state. */
+  disabled?: boolean;
+}
+const { title, desc, icon, disabled = false } = Astro.props;
+---
+
+<article
+  class:list={[
+    "fc-sheen h-full flex items-start gap-4 border border-line rounded-box bg-card px-5 py-5",
+    disabled && "fc-sheen--off opacity-40 cursor-not-allowed select-none",
+  ]}
+  aria-disabled={disabled}
+>
+  {
+    icon && (
+      <span
+        class="text-brand h-9 w-9 shrink-0 mt-0.5 [&>svg]:h-full [&>svg]:w-full"
+        set:html={icon}
+      />
+    )
+  }
+  <div class="min-w-0">
+    <h3
+      class="text-sm font-semibold uppercase tracking-wide text-primary mb-2 flex items-center gap-2"
+    >
+      {title}
+      {
+        disabled && (
+          <span class="font-sans text-[9px] uppercase tracking-wider text-secondary border border-line rounded-full px-1.5 py-0.5">
+            soon
+          </span>
+        )
+      }
+    </h3>
+    <p class="fc-desc text-[13px] text-secondary leading-relaxed">{desc}</p>
+  </div>
+</article>
+
+<style is:global>
+  /* Filled accent bar on the FIRST line of the description only.
+     Height = one line (1lh), filled with the brand color, rounded with the
+     element radius token. */
+  .fc-desc {
+    position: relative;
+    padding-left: 0.75rem;
+  }
+  .fc-desc::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 1.35em; /* fallback for older engines */
+    height: 1lh; /* exactly the first line where supported */
+    background: var(--color-brand);
+    border-radius: var(--radius-element, 4px);
+  }
+
+  /* Diagonal sheen that sweeps across on hover. Highlight color follows the
+     theme via --color-text-primary (kept subtle with color-mix). Dedicated
+     fc-* class + is:global so Astro never prunes the pseudo-element. */
+  .fc-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .fc-sheen::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      color-mix(in srgb, var(--color-text-primary) 14%, transparent),
+      transparent
+    );
+    transform: skewX(-18deg);
+    transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .fc-sheen:hover::after {
+    left: 120%;
+  }
+  .fc-sheen--off::after {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fc-sheen::after {
+      transition: none;
+    }
+  }
+</style>
