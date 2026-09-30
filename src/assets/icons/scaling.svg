@@ -1,0 +1,32 @@
+<!--
+  Scaling icon (stroke line-art) — a center square with four arrows pointing
+  outward (scale out on demand). No outer frame. Theme-reactive via
+  currentColor. viewBox 48×48.
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 48 48"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <rect width="12" height="12" x="18" y="18" rx="2" ry="2" />
+
+  <!-- up -->
+  <path d="M24 14V5" />
+  <path d="M20.5 8.5L24 5l3.5 3.5" />
+
+  <!-- down -->
+  <path d="M24 34v9" />
+  <path d="M20.5 39.5L24 43l3.5-3.5" />
+
+  <!-- left -->
+  <path d="M14 24H5" />
+  <path d="M8.5 20.5L5 24l3.5 3.5" />
+
+  <!-- right -->
+  <path d="M34 24h9" />
+  <path d="M39.5 20.5L43 24l-3.5 3.5" />
+</svg>

@@ -16,6 +16,18 @@ import telegramIcon from "../assets/icons/telegram.svg?raw";
 import whatsappIcon from "../assets/icons/whatsapp.svg?raw";
 import slackIcon from "../assets/icons/slack.svg?raw";
 import zaloIcon from "../assets/icons/zalo.svg?raw";
+import workspaceIcon from "../assets/icons/workspace.svg?raw";
+import socialIcon from "../assets/icons/social.svg?raw";
+import integrationsIcon from "../assets/icons/integrations.svg?raw";
+import yourownIcon from "../assets/icons/yourown.svg?raw";
+import snippetIcon from "../assets/icons/snippet.svg?raw";
+import widgetIcon from "../assets/icons/widget.svg?raw";
+import gadgetIcon from "../assets/icons/gadget.svg?raw";
+import workflowIcon from "../assets/icons/workflow.svg?raw";
+import deployIcon from "../assets/icons/deploy.svg?raw";
+import versioningIcon from "../assets/icons/versioning.svg?raw";
+import scalingIcon from "../assets/icons/scaling.svg?raw";
+import multimodelIcon from "../assets/icons/multimodel.svg?raw";
 import squirrel from "../assets/animals/squirrel.svg?raw";
 import eagle from "../assets/animals/eagle.svg?raw";
 import wolf from "../assets/animals/wolf.svg?raw";
@@ -53,6 +65,39 @@ import dragon from "../assets/animals/dragon.svg?raw";
       title="Always-on"
       desc="Scheduled tasks and proactive turns let it act on its own — across web, chat, and voice."
       disabled
+    />
+  </div>
+</ConceptSection>
+
+<ConceptSection
+  icon={deer}
+  kicker="Four Stags"
+  title="Primitives"
+  tagline="Một prompt → 4 khối xây nên mọi thứ."
+  {/* VI: Snippet · Widget · Gadget · Workflow — composable, ghép lại thành cả hệ thống. */}
+  desc="Snippet · Widget · Gadget · Workflow — composable building blocks that combine into a whole system."
+>
+  {/* Four primitives — one card each */}
+  <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
+    <FeatureCard
+      icon={snippetIcon}
+      title="Snippet"
+      desc="A reusable block of logic with no UI — run it on demand or wire it into anything."
+    />
+    <FeatureCard
+      icon={widgetIcon}
+      title="Widget"
+      desc="A small, glanceable UI you embed anywhere to surface live info at a glance."
+    />
+    <FeatureCard
+      icon={gadgetIcon}
+      title="Gadget"
+      desc="A full mini web app — UI, agent, and data together — that acts on its own."
+    />
+    <FeatureCard
+      icon={workflowIcon}
+      title="Workflow"
+      desc="Multi-step, durable execution that runs to completion and resumes on failure."
     />
   </div>
 </ConceptSection>
@@ -101,16 +146,34 @@ import dragon from "../assets/animals/dragon.svg?raw";
   tagline="Agent truy cập công cụ của bạn."
   {/* VI: Agent truy cập công cụ của bạn — có kiểm soát, đúng quyền bạn cấp. */}
   desc="Your agent accesses your tools — controlled, and only with the permissions you grant."
-/>
-
-<ConceptSection
-  icon={deer}
-  kicker="Four Stags"
-  title="Primitives"
-  tagline="Một prompt → 4 khối xây nên mọi thứ."
-  {/* VI: Snippet · Widget · Gadget · Workflow — composable, ghép lại thành cả hệ thống. */}
-  desc="Snippet · Widget · Gadget · Workflow — composable building blocks that combine into a whole system."
-/>
+>
+  {/* Four access groups — one card each, icons added later */}
+  <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
+    <FeatureCard
+      icon={workspaceIcon}
+      title="Identity & Workspace"
+      desc="Sign in and work across Google, Microsoft, and Jira."
+    />
+    <FeatureCard
+      icon={socialIcon}
+      title="Social"
+      desc="Reach LinkedIn, Facebook, TikTok, Instagram — and run Ads across them all."
+    />
+    <FeatureCard
+      icon={integrationsIcon}
+      title="Integrations"
+      desc="Connect third-party tools like Supabase, Linear, and Notion."
+    />
+    <FeatureCard
+      icon={yourownIcon}
+      title="Your own"
+      desc="Bring your own API, Data, and MCP servers."
+    />
+  </div>
+  <p class="mt-6 font-mono text-[11px] uppercase tracking-wider text-secondary">
+    // and more
+  </p>
+</ConceptSection>
 
 <ConceptSection
   icon={dragon}
@@ -119,4 +182,28 @@ import dragon from "../assets/animals/dragon.svg?raw";
   tagline="Ở gốc rễ — nơi mọi thứ thật sự CHẠY."
   {/* VI: Deploy, versioning, mở rộng theo yêu cầu, chạy inference đa mô hình, và nhiều thứ khác — tất cả đều trong Ratas Runtime. */}
   desc="Deploy, versioning, on-demand scaling, multi-model inference, and more — all inside the Ratas Runtime."
-/>
+>
+  {/* Runtime capabilities — four cards, icons added later */}
+  <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
+    <FeatureCard
+      icon={deployIcon}
+      title="Deploy"
+      desc="Whatever the agent builds goes live instantly — no servers for you to set up."
+    />
+    <FeatureCard
+      icon={versioningIcon}
+      title="Versioning"
+      desc="Every change is versioned, so you can roll back or ship forward with confidence."
+    />
+    <FeatureCard
+      icon={scalingIcon}
+      title="Scaling"
+      desc="Scales on demand from zero to peak, then back down — you never manage capacity."
+    />
+    <FeatureCard
+      icon={multimodelIcon}
+      title="Multi-model"
+      desc="Run on Anthropic, OpenAI, Bedrock, or Cloudflare Workers AI — pick the right model per task."
+    />
+  </div>
+</ConceptSection>

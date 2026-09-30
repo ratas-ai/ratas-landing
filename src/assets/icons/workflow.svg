@@ -1,0 +1,20 @@
+<!--
+  Workflow icon (stroke line-art) — framed window with connected step nodes
+  (multi-step durable flow) inside, matching the Gadget/Widget outer frame.
+  Theme-reactive via currentColor. viewBox 48×48.
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 48 48"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <rect width="37" height="37" x="5.5" y="5.5" rx="4" ry="4" />
+  <circle cx="16" cy="16" r="3" />
+  <circle cx="32" cy="24" r="3" />
+  <circle cx="16" cy="32" r="3" />
+  <path d="M18.6 17.5l10.8 5M18.6 30.5l10.8-5" />
+</svg>
