@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useBinaryFlicker, useTerminalBoot, type BootLine } from "../hooks";
 
+// Freeze the Yggdrasil video at 3s — before the eagle spreads its wings
+// (which crops the treetop foliage), while the circuit is already lit.
+const STOP_AT_SECONDS = 2.9;
+
 const BOOT_LINES: BootLine[] = [
   {
     prefix: "$ loading",
@@ -41,6 +45,12 @@ export default function Hero() {
   const { visible, done, play: boot } = useTerminalBoot(BOOT_LINES, 300);
   const scrambledAfterBoot = useRef(false);
 
+  // Yggdrasil media: poster shown by default; when boot finishes we play the
+  // transparent video once, then fade back to the poster.
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoActive, setVideoActive] = useState(false);
+  const videoStarted = useRef(false);
+
   // run the boot sequence once on mount
   useEffect(() => {
     boot();
@@ -52,6 +62,20 @@ export default function Hero() {
       scrambledAfterBoot.current = true;
       reveal();
     }
+  }, [done]);
+
+  // when boot finishes, start the Yggdrasil video once
+  useEffect(() => {
+    if (!done || videoStarted.current) return;
+    videoStarted.current = true;
+    const v = videoRef.current;
+    if (!v) return;
+    setVideoActive(true);
+    v.currentTime = 0;
+    v.play().catch(() => {
+      // autoplay blocked (e.g. reduced-motion / power saver) — fall back to poster
+      setVideoActive(false);
+    });
   }, [done]);
 
   return (
@@ -133,17 +157,46 @@ export default function Hero() {
         )}
       </div>
 
-      {/* Yggdrasil — real asset */}
+      {/* Yggdrasil — poster image with a transparent video that plays once
+          after the boot sequence finishes, then fades back to the poster. */}
       <div className="flex justify-center">
-        <img
-          src="/img/tree.png"
-          alt="Yggdrasil — the world tree with Rata and the Norse creatures"
-          className="max-w-full max-h-[480px] object-contain drop-shadow-[0_0_20px_var(--color-brand)]"
+        <div
+          className="relative aspect-square w-full max-w-[480px] max-h-[480px]"
           style={{
             filter:
               "drop-shadow(0 0 24px color-mix(in srgb, var(--color-brand) 20%, transparent))",
           }}
-        />
+        >
+          {/* static poster (frame 0 of the video — seamless hand-off).
+              Hidden while the video plays so the transparent video doesn't
+              composite on top of it. */}
+          <img
+            src="/video/tree-poster.png"
+            alt="Yggdrasil — the world tree with Rata and the Norse creatures"
+            className="absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
+            style={{ opacity: videoActive ? 0 : 1 }}
+          />
+          {/* transparent video (VP9 webm for Chrome/FF, HEVC mov for Safari) */}
+          <video
+            ref={videoRef}
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            onTimeUpdate={(e) => {
+              const v = e.currentTarget;
+              if (v.currentTime >= STOP_AT_SECONDS) {
+                v.pause();
+                v.currentTime = STOP_AT_SECONDS;
+              }
+            }}
+            className="absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
+            style={{ opacity: videoActive ? 1 : 0 }}
+          >
+            <source src="/video/tree.mov" type='video/mp4; codecs="hvc1"' />
+            <source src="/video/tree.webm" type="video/webm" />
+          </video>
+        </div>
       </div>
     </section>
   );
