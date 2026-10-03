@@ -11,6 +11,14 @@ export default defineConfig({
   site: "https://ratas.ai",
   output: "static",
   adapter: cloudflare(),
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "vi"],
+    routing: {
+      // "/" serves the default locale (en); others live under /vi, /kr.
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [astryxThemes(), react(), mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

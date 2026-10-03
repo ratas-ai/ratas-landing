@@ -66,3 +66,55 @@ body {
   margin: 0;
   min-height: 100vh;
 }
+
+/* ───────────────────────────────────────────────────────────────
+ * Yggdrasil halo — a soft brand-colored glow behind the hero tree.
+ * Rendered as a blurred radial element BEHIND the poster/video so it
+ * reads as light emanating from the tree (not just a drop-shadow edge).
+ * Strength is boosted in light mode, where a faint brand glow would
+ * otherwise wash out against the bright background.
+ * ─────────────────────────────────────────────────────────────── */
+.tree-halo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 9999px;
+  /* radial brand light, strongest at center, fading to transparent */
+  background: radial-gradient(
+    circle at 50% 48%,
+    color-mix(in srgb, var(--color-brand) 38%, transparent) 0%,
+    color-mix(in srgb, var(--color-brand) 18%, transparent) 32%,
+    transparent 68%
+  );
+  filter: blur(60px);
+  opacity: 0.35;
+  transform: scale(1.0);
+}
+
+/* Light mode: the OS/system default is light, plus forced light.
+   Push the halo harder so it's actually visible on a bright canvas. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .tree-halo {
+    opacity: 0.5;
+    filter: blur(52px);
+    transform: scale(1.03);
+    background: radial-gradient(
+      circle at 50% 48%,
+      color-mix(in srgb, var(--color-brand) 48%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand) 24%, transparent) 30%,
+      transparent 66%
+    );
+  }
+}
+html[data-theme="light"] .tree-halo {
+  opacity: 0.5;
+  filter: blur(52px);
+  transform: scale(1.03);
+  background: radial-gradient(
+    circle at 50% 48%,
+    color-mix(in srgb, var(--color-brand) 48%, transparent) 0%,
+    color-mix(in srgb, var(--color-brand) 24%, transparent) 30%,
+    transparent 66%
+  );
+}

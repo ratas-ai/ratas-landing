@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useBinaryFlicker, useTerminalBoot, type BootLine } from "../hooks";
+import { localizePath, defaultLocale, type Locale } from "../i18n";
 
 // Freeze the Yggdrasil video at 3s — before the eagle spreads its wings
 // (which crops the treetop foliage), while the circuit is already lit.
@@ -38,7 +39,7 @@ const BOOT_LINES: BootLine[] = [
   },
 ];
 
-export default function Hero() {
+export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
   const [agent, reveal] = useBinaryFlicker("AI Agent");
@@ -148,7 +149,7 @@ export default function Hero() {
               ▶ start_free
             </button>
             <a
-              href="/docs"
+              href={localizePath("/docs", locale)}
               className="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el border border-line text-primary hover:border-brand hover:text-brand no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-outline-color)]"
             >
               &gt; view_docs
@@ -164,16 +165,18 @@ export default function Hero() {
           className="relative aspect-square w-full max-w-[480px] max-h-[480px]"
           style={{
             filter:
-              "drop-shadow(0 0 24px color-mix(in srgb, var(--color-brand) 20%, transparent))",
+              "drop-shadow(0 0 20px color-mix(in srgb, var(--color-brand) 20%, transparent)) drop-shadow(0 0 48px color-mix(in srgb, var(--color-brand) 12%, transparent))",
           }}
         >
+          {/* soft brand halo behind the tree (boosted in light mode via CSS) */}
+          <div className="tree-halo" aria-hidden="true" />
           {/* static poster (frame 0 of the video — seamless hand-off).
               Hidden while the video plays so the transparent video doesn't
               composite on top of it. */}
           <img
             src="/video/tree-poster.png"
             alt="Yggdrasil — the world tree with Rata and the Norse creatures"
-            className="absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
+            className="absolute inset-0 z-10 h-full w-full object-contain transition-opacity duration-500"
             style={{ opacity: videoActive ? 0 : 1 }}
           />
           {/* transparent video (VP9 webm for Chrome/FF, HEVC mov for Safari) */}
@@ -190,7 +193,7 @@ export default function Hero() {
                 v.currentTime = STOP_AT_SECONDS;
               }
             }}
-            className="absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
+            className="absolute inset-0 z-10 h-full w-full object-contain transition-opacity duration-500"
             style={{ opacity: videoActive ? 1 : 0 }}
           >
             <source src="/video/tree.mov" type='video/mp4; codecs="hvc1"' />

@@ -1,0 +1,36 @@
+---
+import CircuitBackground from "./CircuitBackground.astro";
+import Hero from "./Hero.tsx";
+import ConceptSections from "./ConceptSections.astro";
+import ThemeSwitcher from "./ThemeSwitcher.tsx";
+import Link from "./Link.astro";
+import { getLocale } from "../i18n";
+
+const locale = getLocale(Astro.url.pathname);
+---
+
+<CircuitBackground />
+
+<!-- NAV -->
+<nav
+  class="sticky top-0 z-50 h-14 flex items-center gap-6 px-6 sm:px-8 bg-surface/95 backdrop-blur border-b border-line"
+>
+  <Link href="/" class="flex items-center gap-2 no-underline">
+    <span class="text-brand">🐿️</span>
+    <span class="font-sans font-bold text-sm uppercase tracking-wider text-primary">ratas</span>
+  </Link>
+  <div class="hidden md:flex gap-6 font-sans text-[11px] uppercase tracking-wider">
+    <Link href="#platform" class="text-secondary hover:text-brand no-underline">/platform</Link>
+    <Link href="#agents" class="text-secondary hover:text-brand no-underline">/agents</Link>
+    <Link href="/docs" class="text-secondary hover:text-brand no-underline">/docs</Link>
+  </div>
+  <div class="ml-auto flex items-center gap-4">
+    <ThemeSwitcher client:load />
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<main class="relative z-10 max-w-5xl mx-auto px-6 sm:px-8">
+  <Hero client:load locale={locale} />
+  <ConceptSections />
+</main>

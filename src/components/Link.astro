@@ -1,0 +1,19 @@
+---
+import { getLocale, localizePath } from "../i18n";
+
+interface Props {
+  /** Internal path ("/docs"), anchor ("#platform"), or external URL. */
+  href: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { href, class: className, ...rest } = Astro.props;
+
+// Detect the locale from the page currently being rendered, then
+// localize internal paths automatically. Anchors/external links pass through.
+const locale = getLocale(Astro.url.pathname);
+const localizedHref = localizePath(href, locale);
+---
+
+<a href={localizedHref} class={className} {...rest}><slot /></a>

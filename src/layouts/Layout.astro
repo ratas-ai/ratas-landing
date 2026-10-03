@@ -5,12 +5,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  lang?: string;
 }
 
 const {
   title = "Ratas — agentic AI platform",
   description = "One prompt, a whole ecosystem. The agent lives inside.",
   image = "/og-default.png",
+  lang = "en",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -18,7 +20,7 @@ const ogImage = new URL(image, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
