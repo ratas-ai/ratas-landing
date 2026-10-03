@@ -71,7 +71,7 @@ const ogImage = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
   </head>
-  <body data-astryx-theme="paper">
+  <body data-astryx-theme="paper" class="min-h-screen flex flex-col">
     <!-- Anti-FOUC (theme): set the active Astryx theme on <body> before paint. -->
     <script is:inline>
       (function () {
@@ -79,9 +79,58 @@ const ogImage = new URL(image, Astro.site);
         document.body.setAttribute("data-astryx-theme", t);
       })();
     </script>
-    <slot />
-    <footer>
-      <p>🐿️ Powered by Cloudflare</p>
+    <div class="flex-1 flex flex-col"><slot /></div>
+    <footer class="relative z-10 border-t border-line bg-surface/60">
+      <div
+        class="max-w-5xl mx-auto px-6 sm:px-8 py-12 grid gap-10 sm:grid-cols-2 md:grid-cols-4"
+      >
+        <!-- brand -->
+        <div class="md:col-span-2 flex flex-col gap-3">
+          <a href="/" class="flex items-center gap-2 no-underline w-fit">
+            <span class="text-brand text-lg">🐿️</span>
+            <span class="font-sans font-bold text-sm uppercase tracking-wider text-primary"
+              >ratas</span
+            >
+          </a>
+          <p class="text-secondary text-sm max-w-xs leading-relaxed">
+            One prompt, a whole ecosystem. The agent lives inside.
+          </p>
+        </div>
+
+        <!-- product links -->
+        <nav class="flex flex-col gap-2">
+          <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
+            Product
+          </p>
+          <a href="/#platform" class="footer-link">Platform</a>
+          <a href="/#agents" class="footer-link">Agents</a>
+          <a href="/docs" class="footer-link">Docs</a>
+          <a href="/about" class="footer-link">About</a>
+        </nav>
+
+        <!-- language links -->
+        <nav class="flex flex-col gap-2">
+          <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
+            Language
+          </p>
+          <a href="/" class="footer-link">English</a>
+          <a href="/vi" class="footer-link">Tiếng Việt</a>
+        </nav>
+      </div>
+
+      <!-- bottom bar -->
+      <div class="border-t border-line">
+        <div
+          class="max-w-5xl mx-auto px-6 sm:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3"
+        >
+          <p class="font-mono text-[11px] text-secondary">
+            © {new Date().getFullYear()} Ratas. All rights reserved.
+          </p>
+          <p class="font-mono text-[11px] text-secondary">
+            🐿️ Powered by <span class="text-brand">Cloudflare</span>
+          </p>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

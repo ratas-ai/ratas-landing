@@ -3,15 +3,43 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="404 — Not found" lang="en">
-  <main class="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 min-h-[60vh] flex flex-col items-center justify-center text-center gap-4">
-    <p class="font-mono text-brand text-sm uppercase tracking-wider">[404]</p>
-    <h1 class="font-sans font-bold text-4xl text-primary">Page not found</h1>
-    <p class="text-secondary">The page you're looking for doesn't exist.</p>
-    <a
-      href="/"
-      class="mt-2 font-sans text-[11px] uppercase tracking-wider text-brand hover:underline no-underline"
-    >
-      &gt; back_home
-    </a>
+  <main
+    class="relative z-10 flex-1 w-full max-w-5xl mx-auto px-6 sm:px-8 py-16 flex flex-col-reverse md:flex-row items-center justify-center gap-10 md:gap-16"
+  >
+    <!-- text block -->
+    <div class="flex flex-col items-center md:items-start text-center md:text-left gap-4">
+      <p class="font-mono text-brand text-sm uppercase tracking-[2px]">[error 404]</p>
+      <h1 class="font-sans font-bold text-5xl sm:text-6xl text-primary leading-none">
+        Lost in the<br />ecosystem
+      </h1>
+      <p class="text-secondary max-w-sm leading-relaxed">
+        Rata scoured the whole tree and couldn't find this page. It may have moved, or never
+        existed.
+      </p>
+      <div class="flex flex-wrap gap-3 mt-2 justify-center md:justify-start">
+        <a
+          href="/"
+          class="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el bg-brand-solid text-on-brand no-underline hover:opacity-90 shadow-[0_2px_8px_var(--color-shadow)] hover:shadow-[0_4px_14px_var(--color-shadow)] transition-shadow"
+        >
+          ▶ back_home
+        </a>
+        <a
+          href="/docs"
+          class="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el border border-line text-primary no-underline hover:border-brand hover:text-brand transition-colors"
+        >
+          &gt; view_docs
+        </a>
+      </div>
+    </div>
+
+    <!-- Rata squirrel (bg removed) -->
+    <div class="flex justify-center shrink-0">
+      <img
+        src="/img/rata-404.png"
+        alt="Rata, the steampunk squirrel, holding a scroll"
+        class="w-[260px] sm:w-[320px] md:w-[380px] h-auto object-contain"
+        style="filter: drop-shadow(0 0 24px color-mix(in srgb, var(--color-brand) 22%, transparent)) drop-shadow(0 0 60px color-mix(in srgb, var(--color-brand) 12%, transparent));"
+      />
+    </div>
   </main>
 </Layout>
