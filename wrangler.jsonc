@@ -12,5 +12,11 @@
   },
   "observability": {
     "enabled": true
-  }
+  },
+  "routes": [
+    {
+      "pattern": "ratas.ai/*",
+      "zone_name": "ratas.ai"
+    }
+  ]
 }
