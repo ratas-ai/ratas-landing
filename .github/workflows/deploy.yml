@@ -2,30 +2,31 @@ name: deploy
 
 # Landing deploy pipeline (GitHub Actions — Cloudflare Builds is disconnected).
 #
-#   push to master       -> build + wrangler preview --name latest
-#                           Updates the stable preview (latest.<preview-host>)
-#                           for internal/stakeholder review. Not public.
-#   release published    -> build + wrangler deploy
-#                           Promotes to production (ratas.ai).
+#   push to master        -> build + wrangler preview --name preview
+#                            Updates the stable preview for internal review.
+#   workflow_dispatch     -> semantic-release (version + tag + changelog +
+#                            GitHub Release) then build + wrangler deploy to prod.
+#                            You click "Run workflow" when you decide to release.
+#
+# Why dispatch (not on:release / on:push): production is a deliberate action.
+# master may hold work-in-progress, so prod only ships when you trigger it.
+# semantic-release still automates the version bump/changelog from your
+# Conventional Commits — you just choose WHEN.
 #
 # Secrets required (repo settings):
-#   CLOUDFLARE_API_TOKEN   - token with Workers Scripts: Edit (+ the account)
+#   CLOUDFLARE_API_TOKEN   - Workers Scripts: Edit (+ the account)
 #   CLOUDFLARE_ACCOUNT_ID  - Cloudflare account ID
-#
-# Notes:
-# - PR preview URLs (workers.dev) are produced by Workers Previews separately;
-#   this workflow handles the stable master preview + production only.
-# - Build command mirrors package.json (astro build). If theme CSS is not
-#   committed, add `npm run build:themes` before the build step.
+#   GITHUB_TOKEN           - provided automatically; used to push tag + Release
 
 on:
   push:
     branches: [master]
-  release:
-    types: [published]
+  workflow_dispatch: {}
 
 permissions:
-  contents: read
+  contents: write # semantic-release pushes tags + creates GitHub Releases
+  issues: write # semantic-release may comment on released issues/PRs
+  pull-requests: write
 
 env:
   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -44,29 +45,33 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - name: Deploy preview (latest)
+      - name: Deploy preview
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: preview --name preview
 
-  # ---- release -> production ----
-  deploy:
-    if: github.event_name == 'release'
+  # ---- manual release -> semantic-release + deploy prod ----
+  release:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    environment: prod # add required reviewers for an extra gate
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # semantic-release needs full history + tags
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
-      - name: Deploy production
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+      # semantic-release analyzes commits, bumps version, creates tag +
+      # GitHub Release + changelog, then (via @semantic-release/exec)
+      # builds and runs `wrangler deploy` to production. If there is nothing
+      # to release, it exits without deploying.
+      - name: Semantic release + deploy
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
