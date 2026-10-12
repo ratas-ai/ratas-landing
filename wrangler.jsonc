@@ -15,8 +15,11 @@
   },
   "routes": [
     {
-      "pattern": "ratas.ai/*",
-      "zone_name": "ratas.ai"
+      "pattern": "ratas.ai",
+      "custom_domain": true,
+      "previews_enabled": true
     }
-  ]
+  ],
+  "previews": {},
+  "preview_urls": true
 }
