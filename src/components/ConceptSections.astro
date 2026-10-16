@@ -33,38 +33,41 @@ import eagle from "../assets/animals/eagle.svg?raw";
 import wolf from "../assets/animals/wolf.svg?raw";
 import deer from "../assets/animals/deer.svg?raw";
 import dragon from "../assets/animals/dragon.svg?raw";
+import { getLocale } from "../i18n";
+import { getStrings } from "../i18n/strings";
+
+const locale = getLocale(Astro.url.pathname);
+const t = getStrings(locale).sections;
 ---
 
 <ConceptSection
   icon={squirrel}
   kicker="Ratatoskr"
   title="Rata agent"
-  tagline="Agent sống bên trong."
-  {/* VI: Agent sống bên trong. Nhớ ngữ cảnh, học từ hành vi, sinh code và tự vận hành. */}
-  desc="An agent that lives inside. It remembers context, learns from behavior, writes code, and runs on its own."
+  id="agents"
+  desc={t.agent.desc}
 >
   {/* 4 agent-harness capabilities — Cloudflare Think standard */}
   <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
     <FeatureCard
       icon={memoryIcon}
-      title="Memory"
-      desc="The agent's soul — it remembers facts and keeps long conversations intact, forgetting nothing."
+      title={t.agent.cards.memory.title}
+      desc={t.agent.cards.memory.desc}
     />
     <FeatureCard
       icon={durabilityIcon}
-      title="Durability"
-      desc="Retry-safe turns that resume where they dropped, and actions that pause and continue later."
+      title={t.agent.cards.durability.title}
+      desc={t.agent.cards.durability.desc}
     />
     <FeatureCard
       icon={toolsIcon}
-      title="Tools & Actions"
-      desc="Workspace, code, browser, and MCP tools — with approval gates and run-once safety."
+      title={t.agent.cards.tools.title}
+      desc={t.agent.cards.tools.desc}
     />
     <FeatureCard
       icon={proactiveIcon}
-      title="Always-on"
-      desc="Scheduled tasks and proactive turns let it act on its own — across web, chat, and voice."
-      disabled
+      title={t.agent.cards.alwaysOn.title}
+      desc={t.agent.cards.alwaysOn.desc}
     />
   </div>
 </ConceptSection>
@@ -73,31 +76,30 @@ import dragon from "../assets/animals/dragon.svg?raw";
   icon={deer}
   kicker="Four Stags"
   title="Primitives"
-  tagline="Một prompt → 4 khối xây nên mọi thứ."
-  {/* VI: Snippet · Widget · Gadget · Workflow — composable, ghép lại thành cả hệ thống. */}
-  desc="Snippet · Widget · Gadget · Workflow — composable building blocks that combine into a whole system."
+  id="platform"
+  desc={t.primitives.desc}
 >
   {/* Four primitives — one card each */}
   <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
     <FeatureCard
       icon={snippetIcon}
-      title="Snippet"
-      desc="A reusable block of logic with no UI — run it on demand or wire it into anything."
+      title={t.primitives.cards.snippet.title}
+      desc={t.primitives.cards.snippet.desc}
     />
     <FeatureCard
       icon={widgetIcon}
-      title="Widget"
-      desc="A small, glanceable UI you embed anywhere to surface live info at a glance."
+      title={t.primitives.cards.widget.title}
+      desc={t.primitives.cards.widget.desc}
     />
     <FeatureCard
       icon={gadgetIcon}
-      title="Gadget"
-      desc="A full mini web app — UI, agent, and data together — that acts on its own."
+      title={t.primitives.cards.gadget.title}
+      desc={t.primitives.cards.gadget.desc}
     />
     <FeatureCard
       icon={workflowIcon}
-      title="Workflow"
-      desc="Multi-step, durable execution that runs to completion and resumes on failure."
+      title={t.primitives.cards.workflow.title}
+      desc={t.primitives.cards.workflow.desc}
     />
   </div>
 </ConceptSection>
@@ -106,32 +108,30 @@ import dragon from "../assets/animals/dragon.svg?raw";
   icon={eagle}
   kicker="Veðrfölnir"
   title="Connectors"
-  tagline="Agent giao tiếp ra ngoài."
-  {/* VI: Agent giao tiếp ra ngoài. Gửi/nhận tin qua kênh bạn dùng. */}
-  desc="Your agent reaches the outside world — sending and receiving messages through the channels you already use."
+  desc={t.connectors.desc}
 >
   {/* Messaging channels — icons added later */}
   <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
     <FeatureCard
       icon={telegramIcon}
-      title="Telegram"
-      desc="Chat with your agent and get replies right inside Telegram."
+      title={t.connectors.cards.telegram.title}
+      desc={t.connectors.cards.telegram.desc}
     />
     <FeatureCard
       icon={slackIcon}
-      title="Slack"
-      desc="Bring the agent into your workspace channels and DMs."
+      title={t.connectors.cards.slack.title}
+      desc={t.connectors.cards.slack.desc}
     />
     <FeatureCard
       icon={whatsappIcon}
-      title="WhatsApp"
-      desc="Reach your agent on the messenger your customers already use."
+      title={t.connectors.cards.whatsapp.title}
+      desc={t.connectors.cards.whatsapp.desc}
       disabled
     />
     <FeatureCard
       icon={zaloIcon}
-      title="Zalo"
-      desc="Connect with your agent over Zalo for local reach."
+      title={t.connectors.cards.zalo.title}
+      desc={t.connectors.cards.zalo.desc}
     />
   </div>
   <p class="mt-6 font-mono text-[11px] uppercase tracking-wider text-secondary">
@@ -143,31 +143,30 @@ import dragon from "../assets/animals/dragon.svg?raw";
   icon={wolf}
   kicker="Fenrir"
   title="Gatekeepers"
-  tagline="Agent truy cập công cụ của bạn."
-  {/* VI: Agent truy cập công cụ của bạn — có kiểm soát, đúng quyền bạn cấp. */}
-  desc="Your agent accesses your tools — controlled, and only with the permissions you grant."
+  desc={t.gatekeepers.desc}
 >
   {/* Four access groups — one card each, icons added later */}
   <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
     <FeatureCard
+      disabled
       icon={workspaceIcon}
-      title="Identity & Workspace"
-      desc="Sign in and work across Google, Microsoft, and Jira."
+      title={t.gatekeepers.cards.workspace.title}
+      desc={t.gatekeepers.cards.workspace.desc}
     />
     <FeatureCard
       icon={socialIcon}
-      title="Social"
-      desc="Reach LinkedIn, Facebook, TikTok, Instagram — and run Ads across them all."
+      title={t.gatekeepers.cards.social.title}
+      desc={t.gatekeepers.cards.social.desc}
     />
     <FeatureCard
       icon={integrationsIcon}
-      title="Integrations"
-      desc="Connect third-party tools like Supabase, Linear, and Notion."
+      title={t.gatekeepers.cards.integrations.title}
+      desc={t.gatekeepers.cards.integrations.desc}
     />
     <FeatureCard
       icon={yourownIcon}
-      title="Your own"
-      desc="Bring your own API, Data, and MCP servers."
+      title={t.gatekeepers.cards.yourOwn.title}
+      desc={t.gatekeepers.cards.yourOwn.desc}
     />
   </div>
   <p class="mt-6 font-mono text-[11px] uppercase tracking-wider text-secondary">
@@ -179,31 +178,29 @@ import dragon from "../assets/animals/dragon.svg?raw";
   icon={dragon}
   kicker="Níðhöggr"
   title="Runtime and inferences"
-  tagline="Ở gốc rễ — nơi mọi thứ thật sự CHẠY."
-  {/* VI: Deploy, versioning, mở rộng theo yêu cầu, chạy inference đa mô hình, và nhiều thứ khác — tất cả đều trong Ratas Runtime. */}
-  desc="Deploy, versioning, on-demand scaling, multi-model inference, and more — all inside the Ratas Runtime."
+  desc={t.runtime.desc}
 >
   {/* Runtime capabilities — four cards, icons added later */}
   <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
     <FeatureCard
       icon={deployIcon}
-      title="Deploy"
-      desc="Whatever the agent builds goes live instantly — no servers for you to set up."
+      title={t.runtime.cards.deploy.title}
+      desc={t.runtime.cards.deploy.desc}
     />
     <FeatureCard
       icon={versioningIcon}
-      title="Versioning"
-      desc="Every change is versioned, so you can roll back or ship forward with confidence."
+      title={t.runtime.cards.versioning.title}
+      desc={t.runtime.cards.versioning.desc}
     />
     <FeatureCard
       icon={scalingIcon}
-      title="Scaling"
-      desc="Scales on demand from zero to peak, then back down — you never manage capacity."
+      title={t.runtime.cards.scaling.title}
+      desc={t.runtime.cards.scaling.desc}
     />
     <FeatureCard
       icon={multimodelIcon}
-      title="Multi-model"
-      desc="Run on Anthropic, OpenAI, Bedrock, or Cloudflare Workers AI — pick the right model per task."
+      title={t.runtime.cards.multimodel.title}
+      desc={t.runtime.cards.multimodel.desc}
     />
   </div>
 </ConceptSection>

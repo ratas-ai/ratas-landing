@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useBinaryFlicker, useTerminalBoot, type BootLine } from "../hooks";
 import { localizePath, defaultLocale, type Locale } from "../i18n";
+import { getStrings } from "../i18n/strings";
 
 // Freeze the Yggdrasil video at 3s — before the eagle spreads its wings
 // (which crops the treetop foliage), while the circuit is already lit.
@@ -40,17 +41,18 @@ const BOOT_LINES: BootLine[] = [
 ];
 
 export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
+  const t = getStrings(locale).hero;
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
-  const [agent, revealAgent] = useBinaryFlicker("agent");
-  const [business, revealBusiness] = useBinaryFlicker("business");
-  // Reveal sequentially: "agent" scrambles first, then "business" starts once
-  // "agent" has locked in. useBinaryFlicker locks one char every `hold` frames
-  // (default 4) at `tick` ms (default 45); "agent" is 5 chars, so it finishes
-  // in roughly (5 * 4 + 4) * 45 ≈ 1080ms. Kick off "business" just after.
+  const [agent, revealAgent] = useBinaryFlicker(t.word1);
+  const [business, revealBusiness] = useBinaryFlicker(t.word2);
+  // Reveal sequentially: word1 scrambles first, then word2 starts once word1
+  // has locked in. useBinaryFlicker locks one char every `hold` frames
+  // (default 4) at `tick` ms (default 45), so an N-char word finishes in
+  // roughly (N * 4 + 4) * 45 ms. Delay word2 by word1's duration.
   const reveal = () => {
     revealAgent();
-    window.setTimeout(revealBusiness, 1100);
+    window.setTimeout(revealBusiness, (t.word1.length * 4 + 4) * 45);
   };
   const { visible, done, play: boot } = useTerminalBoot(BOOT_LINES, 300);
   const scrambledAfterBoot = useRef(false);
@@ -114,7 +116,7 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
         </div>
 
         <h1 className="font-bold uppercase leading-[1.15] tracking-tight text-primary mb-5 text-3xl sm:text-5xl">
-          Your{" "}
+          {t.lead}{" "}
           <span
             className="relative inline-block text-brand cursor-default align-baseline"
             onMouseEnter={reveal}
@@ -122,39 +124,35 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
             {/* invisible placeholder reserves the word's width in the current
                 theme font, so scrambled glyphs never shift layout */}
             <span aria-hidden="true" className="invisible whitespace-nowrap">
-              agent
+              {t.word1}
             </span>
             <span className="absolute inset-0 whitespace-nowrap tabular-nums">
               {agent}
             </span>
-          </span>{" "}
-          runs
+          </span>
           <br />
-          your{" "}
+          {t.mid && <>{t.mid} </>}
           <span
             className="relative inline-block text-brand cursor-default align-baseline"
             onMouseEnter={reveal}
           >
             <span aria-hidden="true" className="invisible whitespace-nowrap">
-              business
+              {t.word2}
             </span>
             <span className="absolute inset-0 whitespace-nowrap tabular-nums">
               {business}
             </span>
           </span>
-          .
+          {t.tail}
         </h1>
 
         <p className="text-secondary text-sm leading-[1.9] max-w-lg mb-9">
-          Build, deploy and govern AI agents that create and operate the apps,
-          workflows, and integrations your business depends on.
+          {t.paragraph}
         </p>
 
         {/* CTA / waitlist */}
         {joined ? (
-          <p className="font-sans text-brand text-sm">
-            ✓ you&apos;re on the list.
-          </p>
+          <p className="font-sans text-brand text-sm">{t.joined}</p>
         ) : (
           <form
             className="flex gap-3 flex-wrap items-center"
@@ -167,13 +165,13 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
               type="submit"
               className="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el bg-brand-solid text-on-brand cursor-pointer hover:opacity-90 shadow-[0_2px_8px_var(--color-shadow)] hover:shadow-[0_4px_14px_var(--color-shadow)] transition-shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-outline-color)]"
             >
-              ▶ start_free
+              {t.ctaStart}
             </button>
             <a
               href={localizePath("/docs", locale)}
               className="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el border border-line text-primary hover:border-brand hover:text-brand no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-outline-color)]"
             >
-              &gt; view_docs
+              {t.ctaDocs}
             </a>
           </form>
         )}

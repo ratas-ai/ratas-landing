@@ -1,5 +1,10 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import CircuitBackground from "../components/CircuitBackground.astro";
+import ThemeSwitcher from "../components/ThemeSwitcher.tsx";
+import { getLocale, localizePath } from "../i18n";
+import { getStrings } from "../i18n/strings";
 
 interface Props {
   title?: string;
@@ -8,11 +13,14 @@ interface Props {
   lang?: string;
 }
 
+const locale = getLocale(Astro.url.pathname);
+const t = getStrings(locale);
+
 const {
-  title = "Ratas — AI agents that run your business",
-  description = "Build, deploy and govern AI agents that create and operate the apps, workflows, and integrations your business depends on.",
+  title = t.seo.title,
+  description = t.seo.description,
   image = "/og-default.png",
-  lang = "en",
+  lang = locale,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -26,14 +34,32 @@ const ogImage = new URL(image, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Client-side routing (View Transitions): internal navigation, including
+         language switch (/ <-> /vi), swaps the DOM instead of a full reload. -->
+    <ClientRouter />
+
     <!-- Anti-FOUC (mode): set Astryx data-theme on <html> before paint.
-         "system" → no attribute (Astryx :root color-scheme follows OS). -->
+         "system" → no attribute (Astryx :root color-scheme follows OS).
+         Re-applied after each View Transitions swap, since <head> inline
+         scripts only run on the initial load. -->
     <script is:inline>
       (function () {
-        var m = localStorage.getItem("ratas-mode") || "system";
-        if (m === "light" || m === "dark") {
-          document.documentElement.setAttribute("data-theme", m);
+        function applyMode() {
+          var m = localStorage.getItem("ratas-mode") || "system";
+          if (m === "light" || m === "dark") {
+            document.documentElement.setAttribute("data-theme", m);
+          } else {
+            document.documentElement.removeAttribute("data-theme");
+          }
         }
+        applyMode();
+        // ClientRouter swaps <html>/<body>; re-apply theme + mode afterwards so
+        // the active theme survives language (or any) navigation.
+        document.addEventListener("astro:after-swap", function () {
+          applyMode();
+          var th = localStorage.getItem("ratas-theme") || "paper";
+          document.body.setAttribute("data-astryx-theme", th);
+        });
       })();
     </script>
 
@@ -79,10 +105,29 @@ const ogImage = new URL(image, Astro.site);
         document.body.setAttribute("data-astryx-theme", t);
       })();
     </script>
+    <CircuitBackground />
+    <!-- NAV (shared across all pages) -->
+    <nav
+      class="sticky top-0 z-50 h-14 flex items-center gap-6 px-6 sm:px-8 bg-surface/95 backdrop-blur border-b border-line"
+    >
+      <a href={localizePath("/", locale)} class="flex items-center gap-2 no-underline">
+        <span class="text-brand">🐿️</span>
+        <span class="font-sans font-bold text-sm uppercase tracking-wider text-primary">ratas</span>
+      </a>
+      <div class="hidden md:flex gap-6 font-sans text-[11px] uppercase tracking-wider">
+        <a href={localizePath("/#platform", locale)} class="text-secondary hover:text-brand no-underline">/platform</a>
+        <a href={localizePath("/#agents", locale)} class="text-secondary hover:text-brand no-underline">/agents</a>
+        <a href={localizePath("/roadmap", locale)} class="text-secondary hover:text-brand no-underline">/roadmap</a>
+        <a href={localizePath("/docs", locale)} class="text-secondary hover:text-brand no-underline">/docs</a>
+      </div>
+      <div class="ml-auto flex items-center gap-4">
+        <ThemeSwitcher client:load />
+      </div>
+    </nav>
     <div class="flex-1 flex flex-col"><slot /></div>
     <footer class="relative z-10 border-t border-line bg-surface/60">
       <div
-        class="max-w-5xl mx-auto px-6 sm:px-8 py-12 grid gap-10 sm:grid-cols-2 md:grid-cols-4"
+        class="max-w-5xl mx-auto px-6 sm:px-8 py-12 grid gap-10 sm:grid-cols-2 md:grid-cols-5"
       >
         <!-- brand -->
         <div class="md:col-span-2 flex flex-col gap-3">
@@ -93,25 +138,35 @@ const ogImage = new URL(image, Astro.site);
             >
           </a>
           <p class="text-secondary text-sm max-w-xs leading-relaxed">
-            Your agent runs your business.
+            {t.footer.tagline}
           </p>
         </div>
 
-        <!-- product links -->
+        <!-- product links — localized to the current page's locale -->
         <nav class="flex flex-col gap-2">
           <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
-            Product
+            {t.footer.product}
           </p>
-          <a href="/#platform" class="footer-link">Platform</a>
-          <a href="/#agents" class="footer-link">Agents</a>
-          <a href="/docs" class="footer-link">Docs</a>
-          <a href="/about" class="footer-link">About</a>
+          <a href={localizePath("/#platform", locale)} class="footer-link">Platform</a>
+          <a href={localizePath("/#agents", locale)} class="footer-link">Agents</a>
+          <a href={localizePath("/roadmap", locale)} class="footer-link">Roadmap</a>
+          <a href={localizePath("/docs", locale)} class="footer-link">Docs</a>
         </nav>
 
-        <!-- language links -->
+        <!-- company links — localized -->
         <nav class="flex flex-col gap-2">
           <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
-            Language
+            {t.footer.company}
+          </p>
+          <a href={localizePath("/about", locale)} class="footer-link">About</a>
+          <a href={localizePath("/terms", locale)} class="footer-link">Terms</a>
+          <a href={localizePath("/privacy", locale)} class="footer-link">Privacy</a>
+        </nav>
+
+        <!-- language links — explicit, NOT localized (these switch locale) -->
+        <nav class="flex flex-col gap-2">
+          <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
+            {t.footer.language}
           </p>
           <a href="/" class="footer-link">English</a>
           <a href="/vi" class="footer-link">Tiếng Việt</a>

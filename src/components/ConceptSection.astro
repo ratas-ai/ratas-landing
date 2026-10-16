@@ -19,12 +19,14 @@ interface Props {
   tagline?: string;
   /** Supporting description. */
   desc: string;
+  /** Optional anchor id for in-page nav (e.g. "platform", "agents"). */
+  id?: string;
 }
 
-const { icon, kicker, title, desc } = Astro.props;
+const { icon, kicker, title, desc, id } = Astro.props;
 ---
 
-<section class="concept-section py-16">
+<section class="concept-section py-16" id={id}>
   <header class="flex items-start gap-6 mb-8">
     <span
       class="concept-icon text-brand h-24 w-24 shrink-0 [&>svg]:h-full [&>svg]:w-full"
