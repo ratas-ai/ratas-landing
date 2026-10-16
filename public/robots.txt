@@ -1,0 +1,20 @@
+# robots.txt for ratas.ai
+#
+# Content Signals (https://contentsignals.org) declare how crawlers may use the
+# content, split by purpose:
+#   search    = yes  -> allow search engines to index (SEO; Google etc.)
+#   ai-input  = yes  -> allow AI to ingest content at answer time (RAG). This is
+#                       what the ratas.ai chatbot's AI Search crawler needs; set
+#                       to `no` would trigger blocked_by_content_signal.
+#   ai-train  = no   -> do NOT allow using our content to train/fine-tune models
+#                       (express reservation of rights under EU Directive 2019/790).
+#
+# Note: Content Signals are a declaration that well-behaved bots honour; they do
+# not hard-block anything (that is WAF / bot settings). Allowing the AI Search
+# crawler also requires Bot Fight Mode to be off on the zone.
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+
+Sitemap: https://ratas.ai/sitemap-index.xml
