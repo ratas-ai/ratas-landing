@@ -42,7 +42,12 @@ const BOOT_LINES: BootLine[] = [
 export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
-  const [agent, reveal] = useBinaryFlicker("AI Agent");
+  const [agent, revealAgent] = useBinaryFlicker("agent");
+  const [business, revealBusiness] = useBinaryFlicker("business");
+  const reveal = () => {
+    revealAgent();
+    revealBusiness();
+  };
   const { visible, done, play: boot } = useTerminalBoot(BOOT_LINES, 300);
   const scrambledAfterBoot = useRef(false);
 
@@ -113,20 +118,30 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
             {/* invisible placeholder reserves the word's width in the current
                 theme font, so scrambled glyphs never shift layout */}
             <span aria-hidden="true" className="invisible whitespace-nowrap">
-              AI Agent
+              agent
             </span>
             <span className="absolute inset-0 whitespace-nowrap tabular-nums">
               {agent}
             </span>
+          </span>{" "}
+          runs your{" "}
+          <span
+            className="relative inline-block text-brand cursor-default align-baseline"
+            onMouseEnter={reveal}
+          >
+            <span aria-hidden="true" className="invisible whitespace-nowrap">
+              business
+            </span>
+            <span className="absolute inset-0 whitespace-nowrap tabular-nums">
+              {business}
+            </span>
           </span>
-          ,
-          <br />
-          your <span className="">ecosystem</span>.
+          .
         </h1>
 
         <p className="text-secondary text-sm leading-[1.9] max-w-lg mb-9">
-          Describe what you want in plain language; the agent builds it, runs
-          it, and keeps it working. Private.
+          Build, deploy and govern AI agents that create and operate the apps,
+          workflows, and integrations your business depends on.
         </p>
 
         {/* CTA / waitlist */}
