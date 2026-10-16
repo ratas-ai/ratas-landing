@@ -44,9 +44,13 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
   const [joined, setJoined] = useState(false);
   const [agent, revealAgent] = useBinaryFlicker("agent");
   const [business, revealBusiness] = useBinaryFlicker("business");
+  // Reveal sequentially: "agent" scrambles first, then "business" starts once
+  // "agent" has locked in. useBinaryFlicker locks one char every `hold` frames
+  // (default 4) at `tick` ms (default 45); "agent" is 5 chars, so it finishes
+  // in roughly (5 * 4 + 4) * 45 ≈ 1080ms. Kick off "business" just after.
   const reveal = () => {
     revealAgent();
-    revealBusiness();
+    window.setTimeout(revealBusiness, 1100);
   };
   const { visible, done, play: boot } = useTerminalBoot(BOOT_LINES, 300);
   const scrambledAfterBoot = useRef(false);
@@ -124,7 +128,9 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
               {agent}
             </span>
           </span>{" "}
-          runs your{" "}
+          runs
+          <br />
+          your{" "}
           <span
             className="relative inline-block text-brand cursor-default align-baseline"
             onMouseEnter={reveal}
