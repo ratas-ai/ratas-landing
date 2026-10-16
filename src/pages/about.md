@@ -6,13 +6,20 @@ description: What Ratas is and why it exists.
 
 # About Ratas
 
-**Ratas** is an agentic AI platform. One prompt, a whole ecosystem —
-the agent lives inside your workspace and gets things done.
+**Ratas** is an agentic AI platform. Your agent builds, deploys, operates, and
+governs the apps and workflows your business runs on — living inside your
+workspace and getting things done.
 
 ## Why Ratas
 
-- **Prompt-first** — describe what you want in natural language.
-- **Contract-driven** — gadgets, snippets, and workflows defined declaratively.
-- **Powered by Cloudflare** — Workers, Durable Objects, D1, and the Agents SDK.
+- **Agent-first** — describe what you want in natural language; the agent builds
+  it, runs it, and keeps it working.
+- **Composable** — Snippet · Widget · Gadget · Workflow combine into a whole
+  system.
 
-Written in plain Markdown, rendered by Astro.
+## Who it's for
+
+Individuals and small teams who want software built and operated by agents,
+without managing servers or infrastructure.
+
+<!-- DRAFT: review and expand before launch. -->
