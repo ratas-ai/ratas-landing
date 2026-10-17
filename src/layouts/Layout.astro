@@ -16,20 +16,32 @@ interface Props {
 const locale = getLocale(Astro.url.pathname);
 const t = getStrings(locale);
 
+// Markdown pages (terms, privacy, roadmap, about, …) use this file as their
+// `layout:` frontmatter, so Astro passes their frontmatter under a
+// `frontmatter` prop (NOT as top-level props). The home page renders <Layout>
+// directly and passes title/description as top-level props instead. Merge both
+// shapes so per-page SEO (title/description/image) works for markdown pages —
+// otherwise every markdown page would fall back to the site-wide defaults and
+// share one title/description (bad for SEO).
+const fm = (Astro.props.frontmatter ?? {}) as {
+  title?: string;
+  description?: string;
+  image?: string;
+  lang?: string;
+};
+
 const {
-  title = t.seo.title,
-  description = t.seo.description,
-  image = "/og-default.png",
-  lang = locale,
+  title = fm.title ?? t.seo.title,
+  description = fm.description ?? t.seo.description,
+  image = fm.image ?? "/og-default.png",
+  lang = fm.lang ?? locale,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 
-// Markdown pages (terms, privacy, roadmap, about, …) use this file as their
-// `layout:` frontmatter, so Astro passes a `frontmatter` prop. The home page
-// renders <Layout> directly and has none. Only markdown content gets the
-// `.markdown` typography wrapper so the home layout stays untouched.
+// Markdown pages get the `.markdown` typography wrapper; the home layout stays
+// untouched. Detect them by the presence of the `frontmatter` prop.
 const isMarkdown = "frontmatter" in Astro.props;
 
 // Astro passes a `headings` array ({ depth, slug, text }) for markdown pages.
