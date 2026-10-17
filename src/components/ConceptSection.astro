@@ -105,14 +105,26 @@ const { icon, kicker, title, desc, id } = Astro.props;
   // Toggle the morph animation each time a section enters the viewport,
   // and reset to the initial (solid) state when it scrolls out — so the
   // animation replays on every scroll-through.
-  const sections = document.querySelectorAll(".concept-section");
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        entry.target.classList.toggle("in-view", entry.isIntersecting);
-      }
-    },
-    { threshold: 0.35 },
-  );
-  sections.forEach((s) => io.observe(s));
+  //
+  // Must re-run after every ClientRouter (View Transitions) navigation:
+  // an Astro <script> runs only on the initial load, so after a / -> /vi
+  // swap the new .concept-section nodes would otherwise never get observed
+  // and the animal SVGs would never animate. `astro:page-load` fires on the
+  // first load AND after each swap, so we (re)wire the observer there.
+  let io: IntersectionObserver | undefined;
+
+  function wireConceptSections() {
+    io?.disconnect();
+    io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          entry.target.classList.toggle("in-view", entry.isIntersecting);
+        }
+      },
+      { threshold: 0.35 },
+    );
+    document.querySelectorAll(".concept-section").forEach((s) => io!.observe(s));
+  }
+
+  document.addEventListener("astro:page-load", wireConceptSections);
 </script>
