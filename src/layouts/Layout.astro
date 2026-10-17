@@ -158,6 +158,13 @@ const showToc = isMarkdown && toc.length >= 3;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- Icons + PWA manifest -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#E0531A" />
+
     <!-- hreflang alternates: pair this page with its equivalent in each locale
          so search engines serve the right language and avoid duplicate-content
          penalties across en/vi. x-default -> the default-locale version. -->
@@ -205,7 +212,8 @@ const showToc = isMarkdown && toc.length >= 3;
       class="sticky top-0 z-50 h-14 flex items-center gap-6 px-6 sm:px-8 bg-surface/95 backdrop-blur border-b border-line"
     >
       <a href={localizePath("/", locale)} class="flex items-center gap-2 no-underline">
-        <span class="text-brand">🐿️</span>
+        {/* <span class="text-brand">🐿️</span> */}
+        <img src="/logo.png" alt="Ratas" width="36" height="36" class="h-9 w-9" />
         <span class="font-sans font-bold text-sm uppercase tracking-wider text-primary">ratas</span>
       </a>
       <div class="hidden md:flex gap-6 font-sans text-[11px] uppercase tracking-wider">
@@ -260,7 +268,8 @@ const showToc = isMarkdown && toc.length >= 3;
         <!-- brand -->
         <div class="md:col-span-2 flex flex-col gap-3">
           <a href="/" class="flex items-center gap-2 no-underline w-fit">
-            <span class="text-brand text-lg">🐿️</span>
+            {/* <span class="text-brand text-lg">🐿️</span> */}
+            <img src="/logo.png" alt="Ratas" width="40" height="40" class="h-10 w-10" />
             <span class="font-sans font-bold text-sm uppercase tracking-wider text-primary"
               >ratas</span
             >
