@@ -20,30 +20,61 @@ description: Cách Ratas thu thập, sử dụng và bảo vệ dữ liệu củ
 
 ## 2. Chúng tôi dùng để làm gì
 
-_Chỗ trống — vận hành danh sách chờ, cải thiện sản phẩm và phản hồi bạn. Chúng
-tôi không bán dữ liệu của bạn._
+- Để **vận hành danh sách chờ** và thông báo cho bạn về quyền truy cập sớm và
+  ngày ra mắt.
+- Để **cung cấp và vận hành Dịch vụ** — bao gồm thực thi các agent của bạn và lưu
+  trữ snippet, widget, gadget, workflow bạn tạo ra.
+- Để **cải thiện sản phẩm** bằng số liệu phân tích tổng hợp, không định danh.
+- Để **phản hồi bạn** và hỗ trợ.
+- Để **giữ Dịch vụ an toàn** — phát hiện lạm dụng, gian lận và vấn đề bảo mật.
+
+Chúng tôi **không** bán dữ liệu của bạn, và không dùng nội dung của bạn để huấn
+luyện các mô hình AI công cộng dùng chung nếu chưa có sự đồng ý của bạn.
 
 ## 3. Cookie
 
-_Chỗ trống — phân tích không dùng cookie; chatbot chỉ dùng một cookie
-first-party để nhớ khách quay lại, không theo dõi hay lập hồ sơ._
+Phân tích của chúng tôi **không dùng cookie** (Cloudflare Web Analytics).
+Chatbot, khi được bật, chỉ đặt một **cookie first-party cho phiên** để nhớ khách
+quay lại trong một phiên — không theo dõi bạn xuyên trang hay lập hồ sơ quảng
+cáo.
 
 ## 4. Bên thứ ba
 
-_Chỗ trống — Cloudflare (hosting, phân tích), nhà cung cấp thanh toán (Stripe,
-PayOS) khi mở thanh toán, và xác thực (Clerk)._
+Chúng tôi dựa vào một số ít đơn vị xử lý, mỗi bên chỉ xử lý những gì chức năng
+của nó cần:
+
+- **Cloudflare** — hosting, môi trường chạy AI và phân tích ưu tiên quyền riêng
+  tư. Workers AI cam kết không huấn luyện trên nội dung của bạn và không lưu giữ
+  dữ liệu (zero data retention) cho suy luận tiêu chuẩn
+  ([data usage](https://developers.cloudflare.com/workers-ai/platform/data-usage/)).
+- **Neon Auth** — xác thực và quản lý tài khoản (khi mở tài khoản).
+- **AWS** — hạ tầng đám mây cho một số dịch vụ backend và lưu trữ.
+- **Stripe / PayOS** — xử lý thanh toán (khi mở thanh toán). Chúng tôi không lưu
+  trữ thông tin thẻ đầy đủ.
+
+Các agent của bạn cũng có thể kết nối tới các dịch vụ bên thứ ba **bạn** chọn; dữ
+liệu chia sẻ với các dịch vụ đó chịu sự điều chỉnh bởi chính sách của họ.
 
 ## 5. Lưu trữ dữ liệu
 
-_Chỗ trống — thời gian lưu email danh sách chờ và lịch sử trò chuyện._
+Chúng tôi chỉ giữ dữ liệu trong thời gian cần thiết cho mục đích thu thập, hoặc
+theo yêu cầu của pháp luật. Email danh sách chờ được giữ cho đến khi bạn hủy đăng
+ký hoặc danh sách đóng; dữ liệu tài khoản và nội dung được giữ khi tài khoản còn
+hoạt động; lịch sử chatbot được giữ trong một khoảng thời gian giới hạn. Bạn có
+thể yêu cầu chúng tôi xóa dữ liệu sớm hơn.
 
 ## 6. Quyền của bạn
 
-_Chỗ trống — truy cập, chỉnh sửa, xóa; cách yêu cầu._
+Tùy nơi bạn cư trú, bạn có thể có quyền truy cập, chỉnh sửa, xuất hoặc xóa dữ
+liệu cá nhân của mình, và phản đối hoặc hạn chế một số hoạt động xử lý. Để thực
+hiện bất kỳ quyền nào, hãy email **admin@ratas.ai** và chúng tôi sẽ phản hồi
+trong khoảng thời gian hợp lý theo yêu cầu của pháp luật.
 
 ## 7. Thay đổi chính sách
 
-_Chỗ trống — cách thông báo thay đổi._
+Chúng tôi có thể cập nhật chính sách này khi sản phẩm và yêu cầu pháp lý thay
+đổi. Các thay đổi quan trọng sẽ được thông báo qua Dịch vụ hoặc email, và ngày
+"cập nhật lần cuối" sẽ thay đổi.
 
 ## 8. Liên hệ
 
