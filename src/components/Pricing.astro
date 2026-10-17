@@ -1,0 +1,170 @@
+---
+/**
+ * Pricing — four plans (Free · Pro · Team · Enterprise) shown on the home page.
+ *
+ * Prices are PLACEHOLDERS until pricing is finalized: Free shows a nominal
+ * amount, the rest show "Coming soon" / "Contact". Plans not yet open render
+ * dimmed with a "soon" badge (see `disabled`). Copy comes from i18n strings;
+ * plan names stay as-is (brand/product terms).
+ */
+import { getLocale } from "../i18n";
+import { getStrings } from "../i18n/strings";
+import type { Plan } from "../i18n/strings";
+
+const locale = getLocale(Astro.url.pathname);
+const t = getStrings(locale).pricing;
+
+// Plans in display order. Pro + Team (indexes 1, 2) get the animated border
+// beam to draw the eye to the plans we want to push.
+const plans: Plan[] = [t.free, t.pro, t.team, t.enterprise];
+const BEAM = new Set([1, 2]);
+---
+
+<section id="pricing" class="py-16">
+  <header class="mb-10">
+    <h2 class="text-2xl font-bold text-primary mb-2">{t.heading}</h2>
+    <p class="text-sm text-secondary leading-relaxed max-w-xl">{t.subheading}</p>
+  </header>
+
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
+    {
+      plans.map((plan, i) => {
+        const beamed = BEAM.has(i);
+        const card = (
+          <article
+            class:list={[
+              "pc-card pc-sheen h-full flex flex-col px-5 py-6 rounded-box",
+              // Beamed cards sit inside .beam-inner (which draws its own edge),
+              // so they drop the normal border; others keep it.
+              beamed ? "bg-transparent" : "border border-line bg-card",
+              plan.disabled && "pc-sheen--off opacity-60",
+            ]}
+            aria-disabled={plan.disabled}
+          >
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="text-sm font-semibold uppercase tracking-wide text-primary">
+                {plan.name}
+              </h3>
+              {plan.disabled && (
+                <span class="font-sans text-[9px] uppercase tracking-wider text-secondary border border-line rounded-full px-1.5 py-0.5">
+                  {t.soon}
+                </span>
+              )}
+            </div>
+
+            <p class="text-2xl font-bold text-brand mb-1">{plan.price}</p>
+            <p class="text-[13px] text-secondary leading-relaxed mb-5 min-h-[2.5em]">
+              {plan.tagline}
+            </p>
+
+            <ul class="flex flex-col gap-2 mb-6 flex-1">
+              {plan.features.map((f) => (
+                <li class="text-[13px] text-secondary flex items-start gap-2">
+                  <span class="text-brand mt-0.5 shrink-0">+</span>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href="#waitlist"
+              class:list={[
+                "font-mono text-xs text-center px-4 py-2 rounded-el border no-underline transition-colors",
+                plan.disabled
+                  ? "border-line text-secondary hover:border-brand hover:text-brand"
+                  : "bg-brand text-on-brand border-brand hover:opacity-90",
+              ]}
+            >
+              {plan.cta}
+            </a>
+          </article>
+        );
+
+        return beamed ? (
+          <div class="beam h-full">
+            <div class="beam-inner bg-card h-full">{card}</div>
+          </div>
+        ) : (
+          card
+        );
+      })
+    }
+  </div>
+</section>
+
+<style is:global>
+  /* ── Border beam ─────────────────────────────────────────────
+     A conic-gradient "comet" rotates behind the card; .beam-inner covers the
+     center so only a thin animated edge shows. padding = beam thickness. */
+  .beam {
+    position: relative;
+    padding: 1.5px;
+    overflow: hidden;
+    /* Match the `rounded-box` utility used by the non-beamed cards, which maps
+       to --radius-container (NOT --radius-box). Keeps all four cards identical. */
+    border-radius: var(--radius-container);
+  }
+  .beam::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0 72%,
+      var(--color-brand) 84%,
+      color-mix(in srgb, var(--color-text-primary) 70%, transparent) 90%,
+      transparent 96%
+    );
+    animation: beam-spin 3s linear infinite;
+  }
+  .beam-inner {
+    position: relative;
+    border-radius: calc(var(--radius-container) - 1.5px);
+    /* background comes from the `bg-card` utility (same token FeatureCard uses,
+       --color-background-card) so it stays correct across every theme. */
+  }
+  @keyframes beam-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .beam::before {
+      animation: none;
+    }
+  }
+
+  /* Diagonal sheen sweep on hover — mirrors FeatureCard. */
+  .pc-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .pc-sheen::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      color-mix(in srgb, var(--color-text-primary) 14%, transparent),
+      transparent
+    );
+    transform: skewX(-18deg);
+    transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .pc-sheen:hover::after {
+    left: 120%;
+  }
+  .pc-sheen--off::after {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pc-sheen::after {
+      transition: none;
+    }
+  }
+</style>

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useBinaryFlicker, useTerminalBoot, type BootLine } from "../hooks";
-import { localizePath, defaultLocale, type Locale } from "../i18n";
+import { defaultLocale, type Locale } from "../i18n";
+// localizePath — used by the Docs CTA (currently commented out, see below).
+// import { localizePath } from "../i18n";
 import { getStrings } from "../i18n/strings";
 
 // Freeze the Yggdrasil video at 3s — before the eagle spreads its wings
@@ -42,6 +44,7 @@ const BOOT_LINES: BootLine[] = [
 
 export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
   const t = getStrings(locale).hero;
+  const waitlistCta = getStrings(locale).pricing.pro.cta;
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
   const [agent, revealAgent] = useBinaryFlicker(t.word1);
@@ -151,30 +154,34 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
         </p>
 
         {/* CTA / waitlist */}
-        {joined ? (
-          <p className="font-sans text-brand text-sm">{t.joined}</p>
-        ) : (
-          <form
-            className="flex gap-3 flex-wrap items-center"
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (email.trim()) setJoined(true);
-            }}
-          >
-            <button
-              type="submit"
-              className="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el bg-brand-solid text-on-brand cursor-pointer hover:opacity-90 shadow-[0_2px_8px_var(--color-shadow)] hover:shadow-[0_4px_14px_var(--color-shadow)] transition-shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-outline-color)]"
+        <div id="waitlist" style={{ scrollMarginTop: "5rem" }}>
+          {joined ? (
+            <p className="font-sans text-brand text-sm">{t.joined}</p>
+          ) : (
+            <form
+              className="flex gap-3 flex-wrap items-center"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (email.trim()) setJoined(true);
+              }}
             >
-              {t.ctaStart}
-            </button>
-            <a
-              href={localizePath("/docs", locale)}
-              className="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el border border-line text-primary hover:border-brand hover:text-brand no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-outline-color)]"
-            >
-              {t.ctaDocs}
-            </a>
-          </form>
-        )}
+              <button
+                type="submit"
+                className="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el bg-brand-solid text-on-brand cursor-pointer hover:opacity-90 shadow-[0_2px_8px_var(--color-shadow)] hover:shadow-[0_4px_14px_var(--color-shadow)] transition-shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-outline-color)]"
+              >
+                {waitlistCta}
+              </button>
+              {/* Docs CTA — hidden until docs are ready (pre-launch).
+              <a
+                href={localizePath("/docs", locale)}
+                className="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el border border-line text-primary hover:border-brand hover:text-brand no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-outline-color)]"
+              >
+                {t.ctaDocs}
+              </a>
+              */}
+            </form>
+          )}
+        </div>
       </div>
 
       {/* Yggdrasil — poster image with a transparent video that plays once

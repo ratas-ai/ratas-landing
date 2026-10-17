@@ -41,6 +41,17 @@ export interface Strings {
     gatekeepers: Section;
     runtime: Section;
   };
+  pricing: {
+    heading: string;
+    subheading: string;
+    /** Badge on plans that aren't open yet. */
+    soon: string;
+    /** Four plans, in display order. */
+    free: Plan;
+    pro: Plan;
+    team: Plan;
+    enterprise: Plan;
+  };
 }
 
 /** One concept section's translatable copy: its description and feature cards.
@@ -52,6 +63,16 @@ export interface Section {
 export interface Card {
   title: string;
   desc: string;
+}
+/** One pricing plan. `price` is a placeholder until pricing is finalized. */
+export interface Plan {
+  name: string;
+  price: string;
+  tagline: string;
+  features: string[];
+  cta: string;
+  /** Not open yet → dimmed card + "soon" badge. */
+  disabled?: boolean;
 }
 
 export const strings: Record<Locale, Strings> = {
@@ -70,7 +91,7 @@ export const strings: Record<Locale, Strings> = {
       paragraph:
         "Build, deploy, operate, and govern the apps and workflows your business runs on — with AI agents.",
       ctaStart: "▶ start_free",
-      ctaDocs: "> view_docs",
+      ctaDocs: "▶ view_docs",
       joined: "✓ you're on the list.",
     },
     footer: {
@@ -186,6 +207,55 @@ export const strings: Record<Locale, Strings> = {
         },
       },
     },
+    pricing: {
+      heading: "Pricing",
+      subheading:
+        "Try it free today. Join the waitlist for early access and exclusive plan details.",
+      soon: "soon",
+      free: {
+        name: "Free",
+        price: "$0",
+        tagline: "Free forever for your personal projects.",
+        features: ["600 credits per month", "Community support"],
+        cta: "▶ join_waitlist",
+      },
+      pro: {
+        name: "Pro",
+        price: "Early access",
+        tagline: "Built for freelancers and individual users.",
+        features: [
+          "2,000 credits per month",
+          "Everything in Free",
+          "Priority support channel with fast resolution",
+        ],
+        cta: "▶ join_waitlist",
+        disabled: false,
+      },
+      team: {
+        name: "Team",
+        price: "Coming soon",
+        tagline: "For small teams and development squads.",
+        features: [
+          "Full personalization: one dedicated agent per user",
+          "Flexible feature requests and system integrations",
+          "Track progress with transparent reporting",
+        ],
+        cta: "▶ join_waitlist",
+        disabled: true,
+      },
+      enterprise: {
+        name: "Enterprise",
+        price: "Contact us",
+        tagline: "For organizations adopting AI with strict data governance.",
+        features: [
+          "Everything in Team",
+          "Multiple flexible workspaces",
+          "Full data isolation & advanced security",
+        ],
+        cta: "▶ contact_sales",
+        disabled: true,
+      },
+    },
   },
   vi: {
     seo: {
@@ -203,8 +273,8 @@ export const strings: Record<Locale, Strings> = {
       tail: ".",
       paragraph:
         "Xây dựng, triển khai, vận hành và quản trị ứng dụng, quy trình cho doanh nghiệp của bạn với AI Agent.",
-      ctaStart: "▶ bắt_đầu",
-      ctaDocs: "> xem_tài_liệu",
+      ctaStart: "▶ Bắt đầu",
+      ctaDocs: "▶ Tài liệu",
       joined: "✓ bạn đã trong danh sách.",
     },
     footer: {
@@ -318,6 +388,56 @@ export const strings: Record<Locale, Strings> = {
             desc: "Đa dạng hóa hạ tầng inference trên Anthropic, OpenAI, Bedrock hoặc Cloudflare Workers AI — tự động định tuyến mô hình tối ưu cho từng tác vụ cụ thể.",
           },
         },
+      },
+    },
+    pricing: {
+      heading: "Bảng giá",
+      subheading:
+        "Trải nghiệm miễn phí hôm nay. Tham gia waitlist để nhận suất truy cập sớm và thông tin gói cước độc quyền.",
+      soon: "sắp ra mắt",
+      free: {
+        name: "Free",
+        price: "0đ",
+        tagline: "Miễn phí trọn đời cho các dự án cá nhân của bạn.",
+        features: ["600 credit mỗi tháng", "Hỗ trợ từ cộng đồng"],
+        cta: "▶ Waitlist",
+      },
+      pro: {
+        name: "Pro",
+        price: "Truy cập sớm",
+        tagline: "Dành riêng cho freelancer và người dùng cá nhân.",
+        features: [
+          "2000 credit mỗi tháng",
+          "Toàn bộ từ gói Free",
+          "Kênh hỗ trợ ưu tiên, giải quyết vấn đề nhanh chóng",
+        ],
+        cta: "▶ Waitlist",
+        disabled: false,
+      },
+      team: {
+        name: "Team",
+        price: "Sắp ra mắt",
+        tagline: "Dành cho nhóm nhỏ & đội ngũ phát triển.",
+        features: [
+          "Cá nhân hóa tối đa: mỗi người dùng một agent riêng",
+          "Linh hoạt yêu cầu tính năng và tích hợp hệ thống",
+          "Quản lý và theo dõi tiến độ qua hệ thống báo cáo minh bạch",
+        ],
+        cta: "▶ Waitlist",
+        disabled: true,
+      },
+      enterprise: {
+        name: "Enterprise",
+        price: "Liên hệ",
+        tagline:
+          "Dành cho các tổ chức ứng dụng AI với quản trị dữ liệu chặt chẽ.",
+        features: [
+          "Bao gồm toàn bộ đặc quyền từ gói Team",
+          "Hỗ trợ đa không gian làm việc (nhiều workspace linh hoạt)",
+          "Cô lập dữ liệu tuyệt đối (data isolation) & bảo mật nâng cao",
+        ],
+        cta: "▶ Liên hệ",
+        disabled: true,
       },
     },
   },

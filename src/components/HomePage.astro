@@ -1,6 +1,7 @@
 ---
 import Hero from "./Hero.tsx";
 import ConceptSections from "./ConceptSections.astro";
+import Pricing from "./Pricing.astro";
 import { getLocale } from "../i18n";
 
 const locale = getLocale(Astro.url.pathname);
@@ -10,4 +11,5 @@ const locale = getLocale(Astro.url.pathname);
 <main class="relative z-10 max-w-5xl mx-auto px-6 sm:px-8">
   <Hero client:load locale={locale} />
   <ConceptSections />
+  <Pricing />
 </main>
