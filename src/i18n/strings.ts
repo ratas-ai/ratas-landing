@@ -80,7 +80,7 @@ export const strings: Record<Locale, Strings> = {
     seo: {
       title: "Ratas — AI agents that run your business",
       description:
-        "Build, deploy, operate, and govern the apps and workflows your business runs on — with AI agents.",
+        "Ratas is an agentic AI platform. Your agent builds, deploys, operates, and governs the apps and workflows your business runs on — living inside your workspace and getting things done, all under your control.",
     },
     hero: {
       lead: "Your",
@@ -262,7 +262,7 @@ export const strings: Record<Locale, Strings> = {
     seo: {
       title: "Ratas — AI Agent vận hành doanh nghiệp của bạn",
       description:
-        "Xây dựng, triển khai, vận hành và quản trị ứng dụng, quy trình cho doanh nghiệp của bạn với AI Agent.",
+        "Ratas là nền tảng AI agent. Agent của bạn xây dựng, triển khai, vận hành và quản trị những ứng dụng và quy trình mà doanh nghiệp của bạn cần — sống ngay trong workspace của bạn và tự hoàn thành công việc, dưới sự quản lý của bạn.",
     },
     hero: {
       // Headline: "Agent của bạn vận hành doanh nghiệp của bạn."
