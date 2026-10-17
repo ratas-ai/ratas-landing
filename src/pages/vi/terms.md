@@ -45,7 +45,7 @@ chúng tôi tại **admin@ratas.ai** nếu nghi ngờ có truy cập trái phép
 
 ## 5. Sử dụng hợp lệ
 
-Bạn đồng ý không thực hiện các hành vi sau:
+Bạn đồng ý **không** thực hiện các hành vi sau:
 
 - Dùng Dịch vụ cho bất cứ việc gì phạm pháp, gây hại, lừa dối hay xâm phạm quyền.
 - Tìm cách tạo mã độc, tấn công, hay dò quét, thăm dò, phá vỡ bảo mật.

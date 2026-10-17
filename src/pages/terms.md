@@ -45,7 +45,7 @@ must be old enough to form a binding contract in your jurisdiction. Notify us at
 
 ## 5. Acceptable use
 
-You agree not to do any of the following:
+You agree **not** to do any of the following:
 
 - Use the Service for anything illegal, harmful, deceptive, or infringing.
 - Attempt to build malware, conduct attacks, or probe, scan, or breach security.
