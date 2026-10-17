@@ -59,6 +59,32 @@ const xDefaultHref = new URL(
 ).toString();
 const currentOgLocale = locale === "vi" ? "vi_VN" : "en_US";
 
+// Structured data (JSON-LD). Organization + WebSite describe the brand and site
+// to search engines (name, logo, URL), improving the odds of rich results /
+// knowledge-panel attribution. Emitted once per page in the head.
+const siteOrigin = Astro.site?.toString().replace(/\/$/, "") ?? "https://ratas.ai";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteOrigin}/#organization`,
+      name: "Ratas",
+      url: `${siteOrigin}/`,
+      logo: `${siteOrigin}/icon-512.png`,
+      description: t.seo.description,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteOrigin}/#website`,
+      name: "Ratas",
+      url: `${siteOrigin}/`,
+      publisher: { "@id": `${siteOrigin}/#organization` },
+      inLanguage: locales.map((l) => (l === "vi" ? "vi-VN" : "en-US")),
+    },
+  ],
+};
+
 // Markdown pages get the `.markdown` typography wrapper; the home layout stays
 // untouched. Detect them by the presence of the `frontmatter` prop.
 const isMarkdown = "frontmatter" in Astro.props;
@@ -197,6 +223,13 @@ const showToc = isMarkdown && toc.length >= 3;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+
+    <!-- Structured data: Organization + WebSite -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(jsonLd)}
+    />
   </head>
   <body data-astryx-theme="paper" class="min-h-screen flex flex-col">
     <!-- Anti-FOUC (theme): set the active Astryx theme on <body> before paint. -->
