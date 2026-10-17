@@ -45,7 +45,6 @@ requires:
 - **Cloudflare** — hosting, the AI runtime, and privacy-first analytics. Workers
   AI commits to no training on your content and zero data retention for standard
   inference ([data usage](https://developers.cloudflare.com/workers-ai/platform/data-usage/)).
-- **Neon Auth** — authentication and account management (when accounts launch).
 - **AWS** — cloud infrastructure for certain backend services and storage.
 - **Stripe / PayOS** — payment processing (when billing launches). We do not
   store full card details.

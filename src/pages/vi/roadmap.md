@@ -51,7 +51,7 @@ Bản phát hành công khai đầu tiên, với phần lõi đã đầy đủ. 
 - 📋 **Thêm nhiều connector & messenger**: Slack, WhatsApp, Zalo, email và nhiều
   hơn, tiếp nối Telegram.
 - 📋 **Thêm nhiều plugin & gatekeeper** — thư viện tích hợp ngày càng mở rộng.
-- 📋 Gadget phong phú hơn: app chia sẻ được, có phân quyền và nhật ký kiểm toán.
+- 📋 Gadget phong phú hơn: app chia sẻ được, có phân quyền và nhật ký kiểm soát.
 - 📋 Mở gói Pro.
 
 ## Sắp tới — Team _(2027, có thể thay đổi)_

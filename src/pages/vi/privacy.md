@@ -47,7 +47,6 @@ của nó cần:
   tư. Workers AI cam kết không huấn luyện trên nội dung của bạn và không lưu giữ
   dữ liệu (zero data retention) cho suy luận tiêu chuẩn
   ([data usage](https://developers.cloudflare.com/workers-ai/platform/data-usage/)).
-- **Neon Auth** — xác thực và quản lý tài khoản (khi mở tài khoản).
 - **AWS** — hạ tầng đám mây cho một số dịch vụ backend và lưu trữ.
 - **Stripe / PayOS** — xử lý thanh toán (khi mở thanh toán). Chúng tôi không lưu
   trữ thông tin thẻ đầy đủ.

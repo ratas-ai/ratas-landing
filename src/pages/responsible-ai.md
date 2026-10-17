@@ -83,6 +83,10 @@ before putting it into production.
   your content** and **zero data retention** for standard inference. See
   Cloudflare's
   [Workers AI data usage](https://developers.cloudflare.com/workers-ai/platform/data-usage/).
+- As we grow, we may run models through additional providers that hold to the
+  same standard — for example AWS Bedrock, with its zero-data-retention and
+  no-training commitments. See AWS's
+  [Bedrock security, privacy & responsible AI](https://aws.amazon.com/bedrock/security-privacy-responsible-ai/).
 - We collect the **minimum** needed to deliver the service. See our
   [Privacy Policy](/privacy) for details.
 - You control your data and can export or delete it.

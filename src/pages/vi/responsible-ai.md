@@ -31,18 +31,18 @@ Bạn luôn ở trong vòng kiểm soát. Agent đề xuất và hành động, 
 
 ## Minh bạch & khả diễn giải
 
-- Agent lưu lại **dấu vết có thể kiểm toán** về các bước thực hiện, công cụ đã
+- Agent lưu lại **dấu vết có thể kiểm soát** về các bước thực hiện, công cụ đã
   gọi và dữ liệu đã chạm tới.
 - Chúng tôi nói rõ điều gì được tự động hóa và điều gì cần bạn xác nhận.
 - Nội dung do agent tạo ra có thể nhận biết được.
 - Khi agent thực hiện một hành động không hiển nhiên, nó giải thích lý do và dữ
   liệu đầu vào phía sau để bạn tự đánh giá có nên tin hay không.
 
-## An toàn & lan can bảo vệ
+## An toàn & hành lang bảo vệ
 
 - **Mặc định tối thiểu quyền hạn.** Agent hoạt động trong phạm vi, quyền và ranh
   giới cô lập đã định — chỉ chạm tới công cụ và dữ liệu bạn cấp.
-- **Xác nhận cho thao tác phá hủy.** Hành động không thể đảo ngược cần được duyệt
+- **Xác nhận cho thao tác hủy.** Hành động không thể đảo ngược cần được duyệt
   rõ ràng.
 - **Thực thi trong sandbox.** Code mà agent viết ra chạy trong môi trường bị
   ràng buộc, cô lập.
@@ -50,7 +50,7 @@ Bạn luôn ở trong vòng kiểm soát. Agent đề xuất và hành động, 
   hại, lạm dụng, mã độc hay vi phạm pháp luật, và đặc biệt thận trọng với các
   lĩnh vực nhạy cảm.
 
-## Bảo mật & khả năng chống chịu
+## Bảo mật & Ổn định
 
 Hệ thống agentic mang những rủi ro mà một mô hình đơn thuần không có. Chúng tôi
 thiết kế để phòng ngừa:
@@ -63,7 +63,7 @@ thiết kế để phòng ngừa:
 - **Giới hạn bán kính ảnh hưởng.** Quyền hạn, giới hạn tần suất và sự cô lập
   khoanh vùng hậu quả của một sai sót hay một bước bị xâm phạm.
 
-## Độ tin cậy & giới hạn của nó
+## Độ tin cậy & giới hạn
 
 AI Agent có thể mắc lỗi, hiểu sai ý định hoặc tạo ra kết quả sai hay lỗi thời.
 **Ratas là công cụ, không phải người ra quyết định.** Hãy rà soát kết quả của
@@ -90,6 +90,11 @@ hành.
   luận tiêu chuẩn. Xem
   [Workers AI data usage](https://developers.cloudflare.com/workers-ai/platform/data-usage/)
   của Cloudflare.
+- Khi phát triển, chúng tôi có thể chạy model qua các nhà cung cấp khác tuân thủ
+  cùng tiêu chuẩn — ví dụ AWS Bedrock, với cam kết không lưu giữ dữ liệu (zero
+  data retention) và không huấn luyện trên dữ liệu của bạn. Xem
+  [Bedrock security, privacy & responsible AI](https://aws.amazon.com/bedrock/security-privacy-responsible-ai/)
+  của AWS.
 - Chúng tôi chỉ thu thập mức **tối thiểu** cần thiết để cung cấp dịch vụ. Xem
   [Chính sách bảo mật](/vi/privacy) để biết chi tiết.
 - Bạn kiểm soát dữ liệu của mình và có thể xuất hoặc xóa.
@@ -100,7 +105,7 @@ Sử dụng có trách nhiệm là sự hợp tác hai phía:
 
 - **Bạn** chịu trách nhiệm về cách mình sử dụng agent, các quyền mình cấp và các
   hành động mình cho phép — cũng như việc rà soát kết quả trước khi dựa vào nó.
-- **Chúng tôi** chịu trách nhiệm xây dựng các lan can bảo vệ, cơ chế kiểm soát,
+- **Chúng tôi** chịu trách nhiệm xây dựng các hành lang bảo vệ, cơ chế kiểm soát,
   sự cô lập và minh bạch để việc sử dụng có trách nhiệm trở nên khả thi, và trung
   thực về những gì nền tảng làm được và không làm được.
 
