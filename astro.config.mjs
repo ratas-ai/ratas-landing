@@ -29,7 +29,26 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  integrations: [astryxThemes(), react(), mdx(), sitemap()],
+  integrations: [
+    astryxThemes(),
+    react(),
+    mdx(),
+    sitemap({
+      // Emit <xhtml:link rel="alternate" hreflang="..."> entries so the sitemap
+      // declares the en/vi relationship for each page (matches the per-page
+      // hreflang tags in the <head>). defaultLocale maps to the unprefixed URL.
+      i18n: {
+        defaultLocale: "en",
+        locales: { en: "en-US", vi: "vi-VN" },
+      },
+      // Add a <lastmod> to every entry. The site is static and rebuilt on each
+      // deploy, so build time is an honest "last generated" signal for crawlers.
+      serialize(item) {
+        item.lastmod = new Date().toISOString();
+        return item;
+      },
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
