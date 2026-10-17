@@ -21,18 +21,28 @@ export function getLocale(pathname: string): Locale {
 /**
  * Localize an internal path for a given locale.
  * - Non-internal links (http, #, mailto, etc.) are returned unchanged.
- * - defaultLocale ("en") maps to the unprefixed root ("/docs").
- * - Other locales get a prefix ("/vi/docs").
+ * - defaultLocale ("en") maps to the unprefixed root ("/docs/").
+ * - Other locales get a prefix ("/vi/docs/").
+ * - Emits a trailing slash on the path portion to match `trailingSlash:
+ *   "always"` output, so links are canonical and the ClientRouter never hits a
+ *   redirect (which would force a full page reload).
  */
 export function localizePath(path: string, locale: Locale): string {
   // Leave external links, anchors, and protocol-relative URLs untouched.
   if (!path.startsWith("/") || path.startsWith("//")) return path;
 
-  if (locale === defaultLocale) return path;
+  // Split off a trailing anchor (e.g. "/#platform" -> base "/", hash "#platform").
+  const hashIndex = path.indexOf("#");
+  let base = hashIndex === -1 ? path : path.slice(0, hashIndex);
+  const hash = hashIndex === -1 ? "" : path.slice(hashIndex);
 
-  // Avoid double-prefixing if the path already starts with the locale.
-  if (path === `/${locale}` || path.startsWith(`/${locale}/`)) return path;
+  // Normalize the base to have exactly one trailing slash.
+  if (!base.endsWith("/")) base += "/";
 
-  // "/" -> "/vi", "/docs" -> "/vi/docs"
-  return path === "/" ? `/${locale}` : `/${locale}${path}`;
+  // Prefix non-default locales, avoiding double-prefix.
+  if (locale !== defaultLocale && base !== `/${locale}/` && !base.startsWith(`/${locale}/`)) {
+    base = base === "/" ? `/${locale}/` : `/${locale}${base}`;
+  }
+
+  return base + hash;
 }

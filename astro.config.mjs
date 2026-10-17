@@ -10,6 +10,11 @@ import astryxThemes from "./src/integrations/astryx-themes.mjs";
 export default defineConfig({
   site: "https://ratas.ai",
   output: "static",
+  // Emit and expect canonical trailing-slash URLs ("/vi/", "/roadmap/"). This
+  // keeps internal links identical to the static output paths so the
+  // ClientRouter (View Transitions) never hits a trailing-slash redirect — a
+  // redirect makes it fall back to a full page reload (e.g. / -> /vi).
+  trailingSlash: "always",
   adapter: cloudflare(),
   // Landing is a static site and does not use Astro.session. The Cloudflare
   // adapter otherwise auto-provisions a default session driver (a KV binding
