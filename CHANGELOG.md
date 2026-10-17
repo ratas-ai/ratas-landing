@@ -1,3 +1,32 @@
+# [1.3.0](https://github.com/ratas-ai/ratas-landing/compare/v1.2.0...v1.3.0) (2026-10-17)
+
+
+### Bug Fixes
+
+* apply markdown frontmatter to SEO meta, hide 404 docs button ([469c066](https://github.com/ratas-ai/ratas-landing/commit/469c066b987bc79872f8560235302988d11acc1e))
+* per-page SEO metadata — frontmatter titles, drop /docs from sitemap ([8d78f2e](https://github.com/ratas-ai/ratas-landing/commit/8d78f2e73293a23fb2bf1effff34e3183924dc69))
+* preserve scroll position when switching language ([a468191](https://github.com/ratas-ai/ratas-landing/commit/a46819106b6908229c2fa1c8f50aebe09846834c))
+* re-wire concept-section animation after view transitions ([0ca5652](https://github.com/ratas-ai/ratas-landing/commit/0ca5652228f99c11146d18e646b627a9ee395487))
+* use trailing-slash internal links so navigation swaps instead of reloading ([003e923](https://github.com/ratas-ai/ratas-landing/commit/003e92334add6e5c0fc013b4cc3ac8131ce88a50)), closes [#platform](https://github.com/ratas-ai/ratas-landing/issues/platform) [vi/#platform](https://github.com/vi//issues/platform)
+
+
+### Features
+
+* add branded Open Graph share image ([544c7a3](https://github.com/ratas-ai/ratas-landing/commit/544c7a3f63a4e80d06223734b6c335735804348e))
+* add early-access and credit/refund/suspension terms ([0cbedb3](https://github.com/ratas-ai/ratas-landing/commit/0cbedb33f40c26b179d0516e7346325014a8f81e))
+* add favicon/icon set, web manifest, and squirrel logo ([e361050](https://github.com/ratas-ai/ratas-landing/commit/e361050d21ee07627ffc23d516bacd0f28a1b363))
+* add i18n hreflang and lastmod to the sitemap ([0293f20](https://github.com/ratas-ai/ratas-landing/commit/0293f2069fced25bcd0b7ca8f882efe26f8ef30e))
+* add Organization + WebSite JSON-LD structured data ([f89926d](https://github.com/ratas-ai/ratas-landing/commit/f89926d751cba4f6ac2d8a1156815acc78fd54ab))
+* add white-label feature to Enterprise plan ([7d2f1cc](https://github.com/ratas-ai/ratas-landing/commit/7d2f1ccbde5a15bd288a90f3b46b3221266764c6))
+* detailed phased roadmap with Open Beta (Dec 2026) milestone ([d3d5338](https://github.com/ratas-ai/ratas-landing/commit/d3d53385642618ebf0636c8407bdc79d6e0bcbf1))
+* expand the About page with the Ratas story and platform primitives ([f6a756b](https://github.com/ratas-ai/ratas-landing/commit/f6a756b0c9ddd093723f6e3af800d6e3a04f8cfd))
+* expand the Responsible AI page ([c61c345](https://github.com/ratas-ai/ratas-landing/commit/c61c345799cb647e8a09a9c2af4295e4a9c9c3e0))
+* flesh out the Terms and Privacy pages ([6045cfa](https://github.com/ratas-ai/ratas-landing/commit/6045cfa193af3a6a6a5dd9e047f3f81e8126b532))
+* hreflang alternates, og:locale, locale-preserving language switch ([db66d60](https://github.com/ratas-ai/ratas-landing/commit/db66d60bcce52b9cbdf9da6155f91e39041f6055))
+* markdown typography and sticky table of contents ([4deb0e6](https://github.com/ratas-ai/ratas-landing/commit/4deb0e6c760f40ce89830cb0c4464a00f01d5645))
+* pricing section with border beam and waitlist CTAs ([0f6b136](https://github.com/ratas-ai/ratas-landing/commit/0f6b13689a234e6c5bd1cdd59020f16067f2e11e)), closes [#pricing](https://github.com/ratas-ai/ratas-landing/issues/pricing)
+* sharpen SEO meta description (en + vi) ([6d33a25](https://github.com/ratas-ai/ratas-landing/commit/6d33a2527d4985895dffb074b967c1a9cd85a22d))
+
 # [1.2.0](https://github.com/ratas-ai/ratas-landing/compare/v1.1.0...v1.2.0) (2026-10-16)
 
 
