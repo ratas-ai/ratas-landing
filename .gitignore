@@ -17,3 +17,6 @@ src/themes/*.d.ts
 *.log
 .DS_Store
 .idea
+# OG image build: rembg model cache + temp workdir
+scripts/.rembg-models/
+public/.ogtmp/
