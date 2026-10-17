@@ -3,7 +3,7 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import CircuitBackground from "../components/CircuitBackground.astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.tsx";
-import { getLocale, localizePath } from "../i18n";
+import { getLocale, localizePath, stripLocale, locales, defaultLocale } from "../i18n";
 import { getStrings } from "../i18n/strings";
 
 interface Props {
@@ -39,6 +39,25 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
+
+// Locale alternates for this page. The logical (locale-independent) path pairs
+// each page with its equivalent in every other locale, used for:
+//  - hreflang alternate links (lets search engines serve the right language),
+//  - the footer language switcher (stay on the SAME page when switching, e.g.
+//    /about/ -> /vi/about/, instead of always jumping to the home page).
+const logicalPath = stripLocale(Astro.url.pathname);
+const localeAlternates = locales.map((l) => ({
+  locale: l,
+  // BCP47-ish region hints for og:locale.
+  ogLocale: l === "vi" ? "vi_VN" : "en_US",
+  href: new URL(localizePath(logicalPath, l), Astro.site).toString(),
+}));
+// x-default points at the default-locale version of this page.
+const xDefaultHref = new URL(
+  localizePath(logicalPath, defaultLocale),
+  Astro.site,
+).toString();
+const currentOgLocale = locale === "vi" ? "vi_VN" : "en_US";
 
 // Markdown pages get the `.markdown` typography wrapper; the home layout stays
 // untouched. Detect them by the presence of the `frontmatter` prop.
@@ -139,6 +158,16 @@ const showToc = isMarkdown && toc.length >= 3;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- hreflang alternates: pair this page with its equivalent in each locale
+         so search engines serve the right language and avoid duplicate-content
+         penalties across en/vi. x-default -> the default-locale version. -->
+    {
+      localeAlternates.map((alt) => (
+        <link rel="alternate" hreflang={alt.locale} href={alt.href} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+
     <!-- OpenGraph (Facebook, LinkedIn, Slack...) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -146,6 +175,14 @@ const showToc = isMarkdown && toc.length >= 3;
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:site_name" content="Ratas" />
+    <meta property="og:locale" content={currentOgLocale} />
+    {
+      localeAlternates
+        .filter((alt) => alt.locale !== locale)
+        .map((alt) => (
+          <meta property="og:locale:alternate" content={alt.ogLocale} />
+        ))
+    }
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -255,13 +292,15 @@ const showToc = isMarkdown && toc.length >= 3;
           <a href={localizePath("/privacy", locale)} class="footer-link">Privacy</a>
         </nav>
 
-        <!-- language links — explicit, NOT localized (these switch locale) -->
+        <!-- language links — switch locale but STAY on the current page, so
+             /about/ -> /vi/about/ (not the home page). Built from the logical
+             path so every page pairs with its equivalent in the other locale. -->
         <nav class="flex flex-col gap-2">
           <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
             {t.footer.language}
           </p>
-          <a href="/" class="footer-link">English</a>
-          <a href="/vi/" class="footer-link">Tiếng Việt</a>
+          <a href={localizePath(logicalPath, "en")} class="footer-link">English</a>
+          <a href={localizePath(logicalPath, "vi")} class="footer-link">Tiếng Việt</a>
         </nav>
       </div>
 
