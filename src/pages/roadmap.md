@@ -6,30 +6,75 @@ description: Where Ratas is today and where it's heading.
 
 # Roadmap
 
-A high-level view of what we're building. Dates are directional, not promises.
+Where Ratas is today and where it's heading — no login, no sales call, just an
+honest view. Each item carries a status: **✅ Shipped**, **🔨 In progress**,
+**📋 Planned**, **💭 Exploring**. The further down the page, the more a plan may
+still change. The one date we're committing to is firm: **Open Beta — early
+December 2026.**
 
-## Now — Landing & foundations
+## Now — Foundations _(Q4 2026)_
 
-- Public landing at **ratas.ai** (this site)
-- Brand, theming, and the Rata agent concept
-- Waitlist
+- ✅ Public landing at **ratas.ai** (this site), brand, and the Rata agent
+  concept.
+- ✅ Waitlist and early-access sign-ups.
+- 🔨 Core platform: your workspace, accounts, and the agent runtime.
+- 🔨 First primitives generated end-to-end from a prompt.
 
-## Next — App & agent
+## Open Beta — early December 2026 _(Planned)_
 
-- **app.ratas.ai** — workspace, auth, and agent chat
-- The four primitives: Snippet · Widget · Gadget · Workflow
-- Knowledge base & chatbot grounded in your content
+The first public release, with the full core in place. Invited waitlist members
+get in first.
 
-## Later — Platform
+- 📋 **app.ratas.ai** — your workspace and agent chat.
+- 📋 The four primitives working together: **Snippet · Widget · Gadget ·
+  Workflow**, generated from natural language.
+- 📋 **Triggers** to run them: schedule, webhook, manual, and message.
+- 📋 **Telegram** connector & messenger — the first channel to reach your agents.
+- 📋 First gadgets: **management apps** (CRM, HR, inventory, dashboards) built to
+  your needs.
+- 📋 **Social & ads automation** — manage social content and ad campaigns through
+  your agents.
+- 📋 First **gatekeepers** — controlled, auditable access to everyday tools:
+  **Google Sheets, Gmail, and Google Drive**.
+- 📋 **Shopify plugin** — connect your store so agents can read orders and manage
+  products.
+- 📋 Versioning and one-click rollback across primitives.
+- 📋 Free tier live, with credits.
 
-- Connectors (Telegram, Slack, WhatsApp, Zalo, and more)
-- Gatekeepers — controlled access to your tools
-- Runtime: deploy, versioning, scaling, multi-model inference
-- Documentation at **docs.ratas.ai**
+## Next — Depth & connections _(Q1 2027)_
 
-## Future
+- 📋 **Agentic workflows** — steps the agent runs directly (read, extract,
+  judge).
+- 📋 **Knowledge base** — ground your agents and chatbots in your own content.
+- 📋 **Browser automation** — agents that browse, extract, and act on the web.
+- 📋 **More connectors & messengers**: Slack, WhatsApp, Zalo, email, and more,
+  building on Telegram.
+- 📋 **More plugins & gatekeepers** — a growing library of integrations.
+- 📋 Richer gadgets: shareable apps with permissions and an audit trail.
+- 📋 Pro plan opens up.
 
-- Marketplace for agents and gadgets
-- Team & Enterprise tiers (SSO, white-label)
+## Later — Team _(2027, subject to change)_
 
-<!-- DRAFT: adjust phases and wording before launch. -->
+- 💭 **Sandbox, isolated** — run your own code and build real, full apps.
+- 💭 **Tenant subdomains** — your own space at `yourname.ratas.ai`.
+- 💭 **Rata CLI** — local development support, right from your terminal.
+- 💭 **Rata components** — customize the look of your chat UI and gadgets.
+- 💭 **Sub-agents & A2A protocol** — let third parties call your agents over A2A
+  and delegate tasks between agents.
+- 💭 More connectors, gatekeepers, social integrations, and beyond.
+- 💭 Documentation at **docs.ratas.ai**.
+
+## Exploring
+
+Directions we believe in but haven't scheduled.
+
+- 💭 Marketplace for agents, gadgets, and connectors.
+- 💭 **Enterprise** — connect to your company's existing workspace, a full
+  solution plus dedicated agent infrastructure, and white-label.
+
+---
+
+Want to shape what comes next? Join the [waitlist](/#waitlist) and tell us what
+you'd build — early members help set priorities.
+
+<!-- DRAFT: adjust phases, statuses, and wording before launch. Open Beta target: early Dec 2026. -->
