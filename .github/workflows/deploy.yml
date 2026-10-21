@@ -5,8 +5,12 @@ name: deploy
 #   push to master        -> build + wrangler preview --name preview
 #                            Updates the stable preview for internal review.
 #   workflow_dispatch     -> semantic-release (version + tag + changelog +
-#                            GitHub Release) then build + wrangler deploy to prod.
-#                            You click "Run workflow" when you decide to release.
+#                            GitHub Release), then a SEPARATE deploy step runs
+#                            build + wrangler deploy to prod when a release was
+#                            produced. You click "Run workflow" to release.
+#                            Deploy is split out so a rejected git-notes push
+#                            (branch ruleset blocks refs/notes/*) can't stop the
+#                            GitHub Release or the production deploy.
 #
 # Why dispatch (not on:release / on:push): production is a deliberate action.
 # master may hold work-in-progress, so prod only ships when you trigger it.
@@ -65,13 +69,50 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # semantic-release analyzes commits, bumps version, creates tag +
-      # GitHub Release + changelog, then (via @semantic-release/exec)
-      # builds and runs `wrangler deploy` to production. If there is nothing
-      # to release, it exits without deploying.
-      - name: Semantic release + deploy
+      # semantic-release (version + tag + CHANGELOG + GitHub Release). Deploy is
+      # a SEPARATE step below so it can't be blocked by semantic-release's
+      # git-notes push, which our branch ruleset rejects (refs/notes/* remote
+      # rejected). That push happens BEFORE the publish phase, so without this
+      # split a notes failure would also skip the GitHub Release + deploy.
+      #
+      # Fix: a tiny `git` shim on PATH that turns the notes push into a no-op
+      # (`git push <url> refs/notes/...`) while passing every other git command
+      # straight through. Everything else (tag/commit push, GitHub Release) runs
+      # normally. The shim lives only for this job.
+      - name: Neutralize git-notes push (ruleset rejects refs/notes/*)
+        run: |
+          mkdir -p "$RUNNER_TEMP/gitshim"
+          REAL_GIT="$(command -v git)"
+          cat > "$RUNNER_TEMP/gitshim/git" <<EOF
+          #!/usr/bin/env bash
+          # Swallow only: git push <remote> refs/notes/...  (any such invocation).
+          for arg in "\$@"; do
+            case "\$arg" in
+              refs/notes/*) echo "[gitshim] skipping notes push: \$*" >&2; exit 0 ;;
+            esac
+          done
+          exec "$REAL_GIT" "\$@"
+          EOF
+          chmod +x "$RUNNER_TEMP/gitshim/git"
+          echo "$RUNNER_TEMP/gitshim" >> "$GITHUB_PATH"
+      - name: Semantic release (version + tag + changelog + GitHub Release)
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Deploy to production ONLY when semantic-release produced a release.
+      # It writes .released-version in its publish phase (see .releaserc.json).
+      # The released version is attached to the Worker version as --tag (shown
+      # in `wrangler versions list` / the dashboard) and --message, so each prod
+      # deployment is traceable back to its release. NOTE: --tag is a Cloudflare
+      # *Worker version* label, not a git tag; wrangler does not read git, so we
+      # pass the value explicitly.
+      - name: Deploy to production
+        if: hashFiles('.released-version') != ''
+        run: |
+          VERSION="$(tr -d '[:space:]' < .released-version)"
+          echo "Deploying version $VERSION (worker version tag: v$VERSION)"
+          npm run build
+          npx wrangler deploy --tag "v$VERSION" --message "Release $VERSION"
+        env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

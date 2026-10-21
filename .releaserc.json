@@ -10,7 +10,8 @@
     [
       "@semantic-release/exec",
       {
-        "publishCmd": "npm run build && npx wrangler deploy"
+        "comment": "Deploy is a separate workflow step (not here) so a failing git-notes push can't block it. This only records that a release happened + its version, for the deploy step to read.",
+        "publishCmd": "echo ${nextRelease.version} > .released-version"
       }
     ],
     [

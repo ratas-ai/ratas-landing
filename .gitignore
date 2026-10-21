@@ -20,3 +20,5 @@ src/themes/*.d.ts
 # OG image build: rembg model cache + temp workdir
 scripts/.rembg-models/
 public/.ogtmp/
+# CI release marker (written by semantic-release exec, read by the deploy step)
+.released-version
