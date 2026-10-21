@@ -182,6 +182,7 @@ const showToc = isMarkdown && toc.length >= 3;
     <!-- Primary meta -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Icons + PWA manifest -->
@@ -207,6 +208,9 @@ const showToc = isMarkdown && toc.length >= 3;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:site_name" content="Ratas" />
     <meta property="og:locale" content={currentOgLocale} />
     {
@@ -223,6 +227,7 @@ const showToc = isMarkdown && toc.length >= 3;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={title} />
 
     <!-- Structured data: Organization + WebSite -->
     <script
