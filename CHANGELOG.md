@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/ratas-ai/ratas-landing/compare/v1.4.0...v1.5.0) (2026-10-21)
+
+
+### Features
+
+* **pricing:** add interactive Pro add-on toggles ([6adb82c](https://github.com/ratas-ai/ratas-landing/commit/6adb82c271dd81f67d5bad25a3c9fa598e34d9f1))
+
 # [1.4.0](https://github.com/ratas-ai/ratas-landing/compare/v1.3.0...v1.4.0) (2026-10-21)
 
 
