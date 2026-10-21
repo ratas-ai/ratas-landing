@@ -10,14 +10,17 @@
 import { getLocale } from "../i18n";
 import { getStrings } from "../i18n/strings";
 import type { Plan } from "../i18n/strings";
+import ProPlanCard from "./ProPlanCard";
 
 const locale = getLocale(Astro.url.pathname);
 const t = getStrings(locale).pricing;
 
 // Plans in display order. Pro + Team (indexes 1, 2) get the animated border
-// beam to draw the eye to the plans we want to push.
+// beam to draw the eye to the plans we want to push. Pro (index 1) is
+// interactive (add-on toggles change its price) so it renders as an island.
 const plans: Plan[] = [t.free, t.pro, t.team, t.enterprise];
 const BEAM = new Set([1, 2]);
+const PRO_INDEX = 1;
 ---
 
 <section id="pricing" class="py-16">
@@ -30,6 +33,18 @@ const BEAM = new Set([1, 2]);
     {
       plans.map((plan, i) => {
         const beamed = BEAM.has(i);
+
+        // Pro is interactive: render the island inside the beam wrapper.
+        if (i === PRO_INDEX) {
+          return (
+            <div class="beam h-full">
+              <div class="beam-inner bg-card h-full">
+                <ProPlanCard plan={plan} client:visible />
+              </div>
+            </div>
+          );
+        }
+
         const card = (
           <article
             class:list={[
@@ -93,6 +108,117 @@ const BEAM = new Set([1, 2]);
 </section>
 
 <style is:global>
+  /* ── Switch (themeable toggle) ───────────────────────────────
+     Track: brand when on, line color when off. Knob slides with the spring
+     easing from the design reference. Colors track theme/mode via tokens. */
+  .rt-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 28px;
+    height: 16px;
+    flex-shrink: 0;
+    padding: 0;
+    border: none;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-text-primary) 22%, transparent);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .rt-switch.on {
+    background: var(--color-brand);
+  }
+  .rt-switch-knob {
+    position: absolute;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transition:
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+      background 0.3s;
+  }
+  .rt-switch.on .rt-switch-knob {
+    transform: translateX(12px);
+  }
+  .rt-switch:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rt-switch-knob {
+      transition: none;
+    }
+  }
+
+  /* ── Tooltip (info bubble) ───────────────────────────────────
+     (i) trigger + a bubble that appears on hover (desktop) or tap (mobile,
+     toggled via .open). Width-capped so it stays on-screen on small widths. */
+  .rt-tip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: -0.15em;
+  }
+  .rt-tip-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    font-size: 10px;
+    font-style: italic;
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: 1px solid
+      color-mix(in srgb, var(--color-text-secondary) 55%, transparent);
+    border-radius: 9999px;
+    cursor: help;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .rt-tip-btn:hover,
+  .rt-tip-btn[aria-expanded="true"] {
+    color: var(--color-brand);
+    border-color: var(--color-brand);
+  }
+  .rt-tip-bubble {
+    position: fixed;
+    /* left/top come from inline style (trigger rect). Anchor the bubble so its
+       bottom sits just above the icon, horizontally centered on `left`. */
+    transform: translate(-50%, calc(-100% - 8px));
+    width: max-content;
+    max-width: min(240px, 72vw);
+    padding: 8px 10px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--color-text-primary);
+    background: var(--color-background-card);
+    border: 1px solid var(--color-line);
+    /* Use --radius-inner (finite in every theme) for this rectangular panel.
+       NOT --radius-element: in the Sand theme that maps to --radius-full
+       (9999px) for pill-shaped buttons/chips, which would distort the bubble
+       into a pill. --radius-inner stays a sane corner radius across themes
+       (paper 6 / cyber 0 / folio 2 / sand 6). See card note below. */
+    border-radius: var(--radius-inner, 6px);
+    /* Layered, theme-aware shadow. --color-shadow adapts to light/dark via the
+       theme's light-dark() (black ~10% light, ~30% dark). Two stacked layers
+       give depth; fall back to a neutral translucent black if the token is
+       unavailable. */
+    --rt-sh: var(--color-shadow, rgba(0, 0, 0, 0.25));
+    box-shadow:
+      0 2px 6px var(--rt-sh),
+      0 10px 28px var(--rt-sh);
+    z-index: 50;
+    pointer-events: none;
+  }
+
   /* ── Border beam ─────────────────────────────────────────────
      A conic-gradient "comet" rotates behind the card; .beam-inner covers the
      center so only a thin animated edge shows. padding = beam thickness. */

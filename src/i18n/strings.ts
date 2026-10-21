@@ -74,6 +74,27 @@ export interface Plan {
   cta: string;
   /** Not open yet → dimmed card + "soon" badge. */
   disabled?: boolean;
+  /** Price-changing add-on toggles. Any plan may define these; a plan with
+   *  `addons` renders an interactive card whose price is computed from
+   *  `basePrice` + `step` per enabled toggle. Selections feed the sign-up
+   *  form later. When present, `basePrice`/`step`/`currency`/`per` are too. */
+  addons?: Addon[];
+  /** Base amount before any add-on (e.g. 9). Required when `addons` is set. */
+  basePrice?: number;
+  /** Amount each enabled add-on adds (e.g. 10). Required when `addons` is set. */
+  step?: number;
+  /** Currency symbol shown before the number (e.g. "$"). */
+  currency?: string;
+  /** Suffix after the price, e.g. "/mo". */
+  per?: string;
+}
+/** One add-on toggle: a label + an info tooltip. Reusable across plans. */
+export interface Addon {
+  /** Stable id, used as the form field key later. */
+  id: string;
+  label: string;
+  /** Tooltip body shown on hover/tap of the (i) icon. */
+  tooltip: string;
 }
 
 export const strings: Record<Locale, Strings> = {
@@ -232,6 +253,24 @@ export const strings: Record<Locale, Strings> = {
         ],
         cta: "▶ join_waitlist",
         disabled: false,
+        basePrice: 9,
+        step: 10,
+        currency: "$",
+        per: "/mo",
+        addons: [
+          {
+            id: "browser_automation",
+            label: "Browser automation",
+            tooltip:
+              "Let your agent drive the browser — navigate sites, fill forms, click through flows, and scrape pages to automate repetitive web tasks end-to-end.",
+          },
+          {
+            id: "social_media",
+            label: "Social media",
+            tooltip:
+              "Automate posts, replies, and direct messages, and run ads and campaigns across your social accounts on a schedule.",
+          },
+        ],
       },
       team: {
         name: "Team",
@@ -417,6 +456,24 @@ export const strings: Record<Locale, Strings> = {
         ],
         cta: "▶ Waitlist",
         disabled: false,
+        basePrice: 9,
+        step: 10,
+        currency: "$",
+        per: "/tháng",
+        addons: [
+          {
+            id: "browser_automation",
+            label: "Tự động hóa trình duyệt",
+            tooltip:
+              "Cho agent điều khiển trình duyệt — mở trang, điền biểu mẫu, bấm qua các luồng và thu thập dữ liệu để tự động hóa trọn vẹn các tác vụ web lặp đi lặp lại.",
+          },
+          {
+            id: "social_media",
+            label: "Mạng xã hội",
+            tooltip:
+              "Tự động hóa đăng bài, trả lời và tin nhắn, đồng thời chạy quảng cáo và chiến dịch trên các tài khoản mạng xã hội theo lịch.",
+          },
+        ],
       },
       team: {
         name: "Team",
