@@ -168,6 +168,17 @@ const showToc = isMarkdown && toc.length >= 3;
     <!-- Fonts (Astryx sets font-family only; we load the files) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/* Preload the hero poster on the home page — it's the LCP element, so
+        fetching it early (as an image, high priority) shortens LCP. Only on the
+        home layout; markdown pages don't show it. */}
+    {!isMarkdown && (
+      <link
+        rel="preload"
+        as="image"
+        href="/video/tree-poster.webp"
+        fetchpriority="high"
+      />
+    )}
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Saira+Semi+Condensed:wght@300;400;500;600;700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500;700&family=Bitter:wght@400;500;600;700&display=swap"
@@ -245,8 +256,12 @@ const showToc = isMarkdown && toc.length >= 3;
       })();
     </script>
     <CircuitBackground />
+    <!-- Skip link: lets keyboard / screen-reader users jump straight to the
+         main content, past the nav. Visually hidden until focused. -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <!-- NAV (shared across all pages) -->
     <nav
+      aria-label="Primary"
       class="sticky top-0 z-50 h-14 flex items-center gap-6 px-6 sm:px-8 bg-surface/95 backdrop-blur border-b border-line"
     >
       <a href={localizePath("/", locale)} class="flex items-center gap-2 no-underline">
@@ -268,7 +283,7 @@ const showToc = isMarkdown && toc.length >= 3;
       {
         isMarkdown ? (
           showToc ? (
-            <div class="mx-auto w-full max-w-5xl px-6 sm:px-8 py-12 sm:py-16 flex flex-col lg:flex-row lg:gap-12">
+            <main id="main-content" class="mx-auto w-full max-w-5xl px-6 sm:px-8 py-12 sm:py-16 flex flex-col lg:flex-row lg:gap-12">
               <article class="markdown min-w-0 w-full max-w-3xl mx-auto lg:mx-0 flex-1">
                 <slot />
               </article>
@@ -288,11 +303,13 @@ const showToc = isMarkdown && toc.length >= 3;
                   </ul>
                 </nav>
               </aside>
-            </div>
+            </main>
           ) : (
-            <article class="markdown max-w-3xl w-full mx-auto px-6 sm:px-8 py-12 sm:py-16">
-              <slot />
-            </article>
+            <main id="main-content">
+              <article class="markdown max-w-3xl w-full mx-auto px-6 sm:px-8 py-12 sm:py-16">
+                <slot />
+              </article>
+            </main>
           )
         ) : (
           <slot />
@@ -318,7 +335,7 @@ const showToc = isMarkdown && toc.length >= 3;
         </div>
 
         <!-- product links — localized to the current page's locale -->
-        <nav class="flex flex-col gap-2">
+        <nav class="flex flex-col gap-2" aria-label={t.footer.product}>
           <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
             {t.footer.product}
           </p>
@@ -329,7 +346,7 @@ const showToc = isMarkdown && toc.length >= 3;
         </nav>
 
         <!-- company links — localized -->
-        <nav class="flex flex-col gap-2">
+        <nav class="flex flex-col gap-2" aria-label={t.footer.company}>
           <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
             {t.footer.company}
           </p>
@@ -342,7 +359,7 @@ const showToc = isMarkdown && toc.length >= 3;
         <!-- language links — switch locale but STAY on the current page, so
              /about/ -> /vi/about/ (not the home page). Built from the logical
              path so every page pairs with its equivalent in the other locale. -->
-        <nav class="flex flex-col gap-2">
+        <nav class="flex flex-col gap-2" aria-label={t.footer.language}>
           <p class="font-sans text-[11px] uppercase tracking-wider text-secondary/70 mb-1">
             {t.footer.language}
           </p>
@@ -360,7 +377,7 @@ const showToc = isMarkdown && toc.length >= 3;
             © {new Date().getFullYear()} Ratas. All rights reserved.
           </p>
           <p class="font-mono text-[11px] text-secondary">
-            🐿️ Powered by <span class="text-brand">Cloudflare</span>
+            <span aria-hidden="true">🐿️</span> Powered by <span class="text-brand">Cloudflare</span>
           </p>
         </div>
       </div>

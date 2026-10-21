@@ -68,6 +68,31 @@ body {
 }
 
 /* ───────────────────────────────────────────────────────────────
+ * Skip-to-content link. Visually hidden until focused (keyboard / screen
+ * reader), then pinned to the top-left so users can jump past the nav.
+ * ─────────────────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.5rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-el, 0.5rem);
+  background: var(--color-brand-solid);
+  color: var(--color-on-brand);
+  font-family: var(--rata-font-mono);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--focus-outline-color, var(--color-brand));
+  outline-offset: 2px;
+}
+
+/* ───────────────────────────────────────────────────────────────
  * Yggdrasil halo — a soft brand-colored glow behind the hero tree.
  * Rendered as a blurred radial element BEHIND the poster/video so it
  * reads as light emanating from the tree (not just a drop-shadow edge).
@@ -283,4 +308,20 @@ html[data-theme="light"] .tree-halo {
   color: var(--color-brand);
   border-left-color: var(--color-brand);
   font-weight: 600;
+}
+
+/* ───────────────────────────────────────────────────────────────
+ * Global reduced-motion safety net (WCAG 2.3.3). Users who ask for less
+ * motion get near-instant transitions/animations site-wide. Component-level
+ * rules (CircuitBackground signals, Hero video) opt out more specifically.
+ * ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -65,6 +65,13 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
   const [videoActive, setVideoActive] = useState(false);
   const videoStarted = useRef(false);
 
+  // Respect prefers-reduced-motion: skip the one-shot Yggdrasil video (the
+  // poster is identical to frame 0, so nothing is lost). The headline scramble
+  // is a brief reveal and still runs, but we could gate it here too if needed.
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
   // run the boot sequence once on mount
   useEffect(() => {
     boot();
@@ -82,6 +89,7 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
   useEffect(() => {
     if (!done || videoStarted.current) return;
     videoStarted.current = true;
+    if (prefersReducedMotion) return; // keep the static poster, no autoplay
     const v = videoRef.current;
     if (!v) return;
     setVideoActive(true);
@@ -207,17 +215,23 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
               Hidden while the video plays so the transparent video doesn't
               composite on top of it. */}
           <img
-            src="/video/tree-poster.png"
+            src="/video/tree-poster.webp"
             alt="Yggdrasil — the world tree with Rata and the Norse creatures"
+            width="480"
+            height="480"
+            fetchPriority="high"
             className="absolute inset-0 z-10 h-full w-full object-contain transition-opacity duration-500"
             style={{ opacity: videoActive ? 0 : 1 }}
           />
-          {/* transparent video (VP9 webm for Chrome/FF, HEVC mov for Safari) */}
+          {/* transparent video (VP9 webm for Chrome/FF, HEVC mov for Safari).
+              preload="none": the video only plays after the ~4s boot sequence,
+              so there's no reason to fetch its multi-MB payload up front — doing
+              so competed with the LCP poster for bandwidth. */}
           <video
             ref={videoRef}
             muted
             playsInline
-            preload="auto"
+            preload="none"
             aria-hidden="true"
             onTimeUpdate={(e) => {
               const v = e.currentTarget;

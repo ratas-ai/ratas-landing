@@ -30,6 +30,7 @@ const { icon, kicker, title, desc, id } = Astro.props;
   <header class="flex items-start gap-6 mb-8">
     <span
       class="concept-icon text-brand h-24 w-24 shrink-0 [&>svg]:h-full [&>svg]:w-full"
+      aria-hidden="true"
       set:html={icon}
     />
     <div>

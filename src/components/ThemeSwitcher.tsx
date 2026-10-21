@@ -62,42 +62,53 @@ export default function ThemeSwitcher() {
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <span className="font-mono text-xs text-secondary uppercase tracking-wider">
+      <span
+        id="theme-label"
+        className="font-mono text-xs text-secondary uppercase tracking-wider"
+      >
         theme:
       </span>
-      {THEMES.map((t) => (
-        <button
-          key={t.id}
-          onClick={() => pickTheme(t.id)}
-          className={
-            "font-mono text-xs px-3 py-1.5 rounded-el border cursor-pointer transition-colors " +
-            (theme === t.id
-              ? "bg-brand text-on-brand border-brand"
-              : "bg-transparent text-secondary border-line hover:border-brand")
-          }
-        >
-          {t.label}
-        </button>
-      ))}
+      <div role="group" aria-labelledby="theme-label" className="flex gap-2">
+        {THEMES.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => pickTheme(t.id)}
+            aria-pressed={theme === t.id}
+            className={
+              "font-mono text-xs px-3 py-1.5 rounded-el border cursor-pointer transition-colors " +
+              (theme === t.id
+                ? "bg-brand text-on-brand border-brand"
+                : "bg-transparent text-secondary border-line hover:border-brand")
+            }
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
 
-      <span className="font-mono text-xs text-secondary uppercase tracking-wider ml-2">
+      <span
+        id="mode-label"
+        className="font-mono text-xs text-secondary uppercase tracking-wider ml-2"
+      >
         mode:
       </span>
-      {MODES.map((m) => (
-        <button
-          key={m.id}
-          onClick={() => pickMode(m.id)}
-          aria-pressed={mode === m.id}
-          className={
-            "font-mono text-xs px-3 py-1.5 rounded-el border cursor-pointer transition-colors " +
-            (mode === m.id
-              ? "bg-brand text-on-brand border-brand"
-              : "bg-transparent text-secondary border-line hover:border-brand")
-          }
-        >
-          {m.label}
-        </button>
-      ))}
+      <div role="group" aria-labelledby="mode-label" className="flex gap-2">
+        {MODES.map((m) => (
+          <button
+            key={m.id}
+            onClick={() => pickMode(m.id)}
+            aria-pressed={mode === m.id}
+            className={
+              "font-mono text-xs px-3 py-1.5 rounded-el border cursor-pointer transition-colors " +
+              (mode === m.id
+                ? "bg-brand text-on-brand border-brand"
+                : "bg-transparent text-secondary border-line hover:border-brand")
+            }
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
