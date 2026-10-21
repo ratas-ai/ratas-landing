@@ -24,6 +24,7 @@ export interface Strings {
     paragraph: string;
     ctaStart: string;
     ctaDocs: string;
+    ctaHowItWorks: string;
     joined: string;
   };
   footer: {
@@ -80,7 +81,7 @@ export const strings: Record<Locale, Strings> = {
     seo: {
       title: "Ratas — AI agents that run your business",
       description:
-        "Ratas is an agentic AI platform. Your agent builds, deploys, operates, and governs the apps and workflows your business runs on — living inside your workspace and getting things done, all under your control.",
+        "Ratas is an agentic AI platform. Turn a prompt into an app, workflow, or automation — Rata builds it, connects it to your tools, and keeps it running, all under your control.",
     },
     hero: {
       lead: "Your",
@@ -89,9 +90,10 @@ export const strings: Record<Locale, Strings> = {
       word2: "business",
       tail: ".",
       paragraph:
-        "Build, deploy, operate, and govern the apps and workflows your business runs on — with AI agents.",
+        "Turn a prompt into an app, workflow, or automation. Rata builds it, connects it to your tools, and keeps it running.",
       ctaStart: "▶ start_free",
       ctaDocs: "▶ view_docs",
+      ctaHowItWorks: "> see_how_it_works",
       joined: "✓ you're on the list.",
     },
     footer: {
@@ -102,11 +104,11 @@ export const strings: Record<Locale, Strings> = {
     },
     sections: {
       agent: {
-        desc: "An agent that lives inside. It remembers context, learns from behavior, writes code, and runs on its own.",
+        desc: "Prompt it, and Ratas builds the workflow, crafts the app, and running end-to-end. Zero code, zero friction.",
         cards: {
           memory: {
             title: "Memory",
-            desc: "The agent's soul — it remembers facts and keeps long conversations intact, forgetting nothing.",
+            desc: "The agent's soul — Remembers context and behaviors, handles long conversations, and automates repetitive tasks.",
           },
           durability: {
             title: "Durability",
@@ -202,7 +204,7 @@ export const strings: Record<Locale, Strings> = {
           },
           multimodel: {
             title: "Multi-model",
-            desc: "Run on Anthropic, OpenAI, Bedrock, or Cloudflare Workers AI — pick the right model per task.",
+            desc: "Intelligent Routing — automatically picking the right AI for every specific task.",
           },
         },
       },
@@ -262,7 +264,7 @@ export const strings: Record<Locale, Strings> = {
     seo: {
       title: "Ratas — AI Agent vận hành doanh nghiệp của bạn",
       description:
-        "Ratas là nền tảng AI agent. Agent của bạn xây dựng, triển khai, vận hành và quản trị những ứng dụng và quy trình mà doanh nghiệp của bạn cần — sống ngay trong workspace của bạn và tự hoàn thành công việc, dưới sự quản lý của bạn.",
+        "Ratas là nền tảng AI agent. Biến một prompt thành ứng dụng, quy trình hay tự động hóa — Rata xây dựng, kết nối công cụ của bạn và vận hành liên tục, tất cả dưới quyền kiểm soát của bạn.",
     },
     hero: {
       // Headline: "Agent của bạn vận hành doanh nghiệp của bạn."
@@ -273,9 +275,10 @@ export const strings: Record<Locale, Strings> = {
       word2: "AI Agent",
       tail: ".",
       paragraph:
-        "Xây dựng, triển khai, vận hành và quản trị ứng dụng, quy trình cho doanh nghiệp của bạn với AI Agent.",
+        "Biến một câu lệnh thành ứng dụng, quy trình hay tự động hóa. Rata xây dựng, kết nối công cụ của bạn và vận hành liên tục.",
       ctaStart: "▶ Bắt đầu",
       ctaDocs: "▶ Tài liệu",
+      ctaHowItWorks: "> Khám phá cách thức",
       joined: "✓ bạn đã trong danh sách.",
     },
     footer: {
@@ -286,11 +289,11 @@ export const strings: Record<Locale, Strings> = {
     },
     sections: {
       agent: {
-        desc: "AI Agent sống trong hệ sinh thái. Nhớ ngữ cảnh, học từ hành vi, viết code và tự vận hành.",
+        desc: "Chỉ cần nêu yêu cầu, Ratas tự động thiết kế workflow, dựng ứng dụng và vận hành xuyên suốt — không cần code, không cấu hình rườm rà.",
         cards: {
           memory: {
             title: "Memory",
-            desc: "Bộ nhớ agent — ghi nhớ thông tin và giữ trọn những cuộc hội thoại dài, các tác vụ lặp lại.",
+            desc: "Bộ nhớ agent — Ghi nhớ ngữ cảnh, hành vi, thấu hiểu hội thoại dài và tự động hóa các tác vụ lặp lại.",
           },
           durability: {
             title: "Durability",
@@ -386,7 +389,7 @@ export const strings: Record<Locale, Strings> = {
           },
           multimodel: {
             title: "Multi-model",
-            desc: "Đa dạng hóa hạ tầng inference trên Anthropic, OpenAI, Bedrock hoặc Cloudflare Workers AI — tự động định tuyến mô hình tối ưu cho từng tác vụ cụ thể.",
+            desc: "Intelligent Routing: Tối ưu tốc độ, chi phí và chất lượng bằng cách tự động chọn mô hình phù hợp nhất cho từng yêu cầu.",
           },
         },
       },

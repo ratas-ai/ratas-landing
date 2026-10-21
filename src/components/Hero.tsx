@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useBinaryFlicker, useTerminalBoot, type BootLine } from "../hooks";
 import { defaultLocale, type Locale } from "../i18n";
-// localizePath — used by the Docs CTA (currently commented out, see below).
-// import { localizePath } from "../i18n";
+import { localizePath } from "../i18n";
 import { getStrings } from "../i18n/strings";
 
 // Freeze the Yggdrasil video at 3s — before the eagle spreads its wings
@@ -171,6 +170,14 @@ export default function Hero({ locale = defaultLocale }: { locale?: Locale }) {
               >
                 {waitlistCta}
               </button>
+              {/* Secondary CTA — scrolls to the "how it works" section (Rata
+                  agent / primitives) instead of linking to docs (not ready). */}
+              <a
+                href={localizePath("/#agents", locale)}
+                className="font-sans text-[13px] font-medium uppercase tracking-[1.5px] px-6 py-3 rounded-el border border-line text-primary hover:border-brand hover:text-brand no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-outline-color)]"
+              >
+                {t.ctaHowItWorks}
+              </a>
               {/* Docs CTA — hidden until docs are ready (pre-launch).
               <a
                 href={localizePath("/docs", locale)}
