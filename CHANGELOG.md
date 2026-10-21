@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/ratas-ai/ratas-landing/compare/v1.5.0...v1.6.0) (2026-10-21)
+
+
+### Features
+
+* **ci:** split deploy from semantic-release and tag Worker versions ([749ce9f](https://github.com/ratas-ai/ratas-landing/commit/749ce9f2453add791fd278f7cfe2b4e063a55255))
+
 # [1.5.0](https://github.com/ratas-ai/ratas-landing/compare/v1.4.0...v1.5.0) (2026-10-21)
 
 
