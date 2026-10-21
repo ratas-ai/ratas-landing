@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/ratas-ai/ratas-landing/compare/v1.3.0...v1.4.0) (2026-10-21)
+
+
+### Features
+
+* accessibility (ARIA, landmarks, reduced-motion) and LCP optimization ([2a83ec9](https://github.com/ratas-ai/ratas-landing/commit/2a83ec9908c295758ac24a087fc94968f1024cac))
+* round out SEO meta — robots, og:image dimensions/alt, twitter:image:alt ([906c69b](https://github.com/ratas-ai/ratas-landing/commit/906c69b6f13e3a0ccfbf80a9a92014caf6101527))
+* sharpen hero/SEO copy and add a 'see how it works' CTA ([582716f](https://github.com/ratas-ai/ratas-landing/commit/582716f3b9656b2df9137df94e0e56be73d107d4)), closes [#agents](https://github.com/ratas-ai/ratas-landing/issues/agents) [#agents](https://github.com/ratas-ai/ratas-landing/issues/agents)
+
 # [1.3.0](https://github.com/ratas-ai/ratas-landing/compare/v1.2.0...v1.3.0) (2026-10-17)
 
 
