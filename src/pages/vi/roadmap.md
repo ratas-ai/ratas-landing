@@ -29,12 +29,12 @@ Bản phát hành công khai đầu tiên, với phần lõi đã đầy đủ. 
 - 📋 Bốn primitive phối hợp cùng nhau: **Snippet · Widget · Gadget ·
   Workflow**, được tạo ra từ ngôn ngữ tự nhiên.
 - 📋 **Trigger** để kích hoạt: lịch (schedule), webhook, thủ công và tin nhắn.
-- 📋 Connector & messenger **Telegram** — kênh đầu tiên để tiếp cận agent của bạn.
+- 📋 Messenger **Telegram** — kênh đầu tiên để tiếp cận agent của bạn.
 - 📋 Những gadget đầu tiên: **chương trình quản lý** (CRM, HR, kho hàng,
   dashboard) xây theo nhu cầu của bạn.
 - 📋 **Tự động hóa Social & quảng cáo** — quản lý nội dung mạng xã hội và chiến
   dịch quảng cáo thông qua agent của bạn.
-- 📋 Những **gatekeeper** đầu tiên — truy cập có kiểm soát, có thể audit tới các
+- 📋 Những **connector** đầu tiên — truy cập có kiểm soát, có thể audit tới các
   công cụ hằng ngày: **Google Sheets, Gmail và Google Drive**.
 - 📋 **Shopify plugin** — kết nối cửa hàng để agent đọc đơn hàng và quản lý sản
   phẩm.
@@ -48,9 +48,9 @@ Bản phát hành công khai đầu tiên, với phần lõi đã đầy đủ. 
 - 📋 **Cơ sở tri thức** — gắn agent và chatbot của bạn vào chính nội dung của
   bạn.
 - 📋 **Tự động hóa browser** — agent duyệt web, bóc tách và thao tác trên web.
-- 📋 **Thêm nhiều connector & messenger**: Slack, WhatsApp, Zalo, email và nhiều
+- 📋 **Thêm nhiều messenger**: Slack, WhatsApp, Zalo, email và nhiều
   hơn, tiếp nối Telegram.
-- 📋 **Thêm nhiều plugin & gatekeeper** — thư viện tích hợp ngày càng mở rộng.
+- 📋 **Thêm nhiều plugin & connector** — thư viện tích hợp ngày càng mở rộng.
 - 📋 Gadget phong phú hơn: app chia sẻ được, có phân quyền và nhật ký kiểm soát.
 - 📋 Mở gói Pro.
 
@@ -62,14 +62,14 @@ Bản phát hành công khai đầu tiên, với phần lõi đã đầy đủ. 
 - 💭 **Rata components** — tùy biến giao diện cho chat UI và Gadget.
 - 💭 **Sub-agent & A2A protocol** — cho phép bên thứ ba gọi agent của bạn qua A2A
   và ủy thác (delegate) tác vụ giữa các agent.
-- 💭 Tiếp tục phát triển thêm connector, gatekeeper, social, và nhiều hơn nữa.
+- 💭 Tiếp tục phát triển thêm messenger, connector, social, và nhiều hơn nữa.
 - 💭 Tài liệu tại **docs.ratas.ai**.
 
 ## Đang cân nhắc
 
 Những hướng đi chúng tôi tin tưởng nhưng chưa lên lịch.
 
-- 💭 Marketplace cho agent, gadget và connector.
+- 💭 Marketplace cho agent, gadget và messenger.
 - 💭 **Enterprise** — kết nối workspace sẵn có của công ty bạn, cung cấp giải pháp
   trọn gói kèm hạ tầng agent riêng, và white-label.
 

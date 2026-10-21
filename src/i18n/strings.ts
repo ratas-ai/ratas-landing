@@ -38,8 +38,8 @@ export interface Strings {
     // untranslated — they are brand/proper nouns, set in ConceptSections.astro.
     agent: Section;
     primitives: Section;
+    messengers: Section;
     connectors: Section;
-    gatekeepers: Section;
     runtime: Section;
   };
   pricing: {
@@ -145,7 +145,7 @@ export const strings: Record<Locale, Strings> = {
           },
         },
       },
-      connectors: {
+      messengers: {
         desc: "Your agent reaches the outside world — sending and receiving messages through the channels you already use.",
         cards: {
           telegram: {
@@ -166,7 +166,7 @@ export const strings: Record<Locale, Strings> = {
           },
         },
       },
-      gatekeepers: {
+      connectors: {
         desc: "Your agent accesses your tools — controlled, and only with the permissions you grant.",
         cards: {
           workspace: {
@@ -330,7 +330,7 @@ export const strings: Record<Locale, Strings> = {
           },
         },
       },
-      connectors: {
+      messengers: {
         desc: "Agent kết nối ra thế giới bên ngoài — gửi và nhận tin nhắn qua những kênh bạn đang dùng.",
         cards: {
           telegram: {
@@ -351,7 +351,7 @@ export const strings: Record<Locale, Strings> = {
           },
         },
       },
-      gatekeepers: {
+      connectors: {
         desc: "Agent truy cập công cụ của bạn — có kiểm soát, và chỉ với quyền bạn cấp.",
         cards: {
           workspace: {

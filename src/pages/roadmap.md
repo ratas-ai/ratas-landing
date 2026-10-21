@@ -29,12 +29,12 @@ get in first.
 - 📋 The four primitives working together: **Snippet · Widget · Gadget ·
   Workflow**, generated from natural language.
 - 📋 **Triggers** to run them: schedule, webhook, manual, and message.
-- 📋 **Telegram** connector & messenger — the first channel to reach your agents.
+- 📋 **Telegram** messenger — the first channel to reach your agents.
 - 📋 First gadgets: **management apps** (CRM, HR, inventory, dashboards) built to
   your needs.
 - 📋 **Social & ads automation** — manage social content and ad campaigns through
   your agents.
-- 📋 First **gatekeepers** — controlled, auditable access to everyday tools:
+- 📋 First **connectors** — controlled, auditable access to everyday tools:
   **Google Sheets, Gmail, and Google Drive**.
 - 📋 **Shopify plugin** — connect your store so agents can read orders and manage
   products.
@@ -47,9 +47,9 @@ get in first.
   judge).
 - 📋 **Knowledge base** — ground your agents and chatbots in your own content.
 - 📋 **Browser automation** — agents that browse, extract, and act on the web.
-- 📋 **More connectors & messengers**: Slack, WhatsApp, Zalo, email, and more,
+- 📋 **More messengers**: Slack, WhatsApp, Zalo, email, and more,
   building on Telegram.
-- 📋 **More plugins & gatekeepers** — a growing library of integrations.
+- 📋 **More plugins & connectors** — a growing library of integrations.
 - 📋 Richer gadgets: shareable apps with permissions and an audit trail.
 - 📋 Pro plan opens up.
 
@@ -61,14 +61,14 @@ get in first.
 - 💭 **Rata components** — customize the look of your chat UI and gadgets.
 - 💭 **Sub-agents & A2A protocol** — let third parties call your agents over A2A
   and delegate tasks between agents.
-- 💭 More connectors, gatekeepers, social integrations, and beyond.
+- 💭 More messengers, connectors, social integrations, and beyond.
 - 💭 Documentation at **docs.ratas.ai**.
 
 ## Exploring
 
 Directions we believe in but haven't scheduled.
 
-- 💭 Marketplace for agents, gadgets, and connectors.
+- 💭 Marketplace for agents, gadgets, and messengers.
 - 💭 **Enterprise** — connect to your company's existing workspace, a full
   solution plus dedicated agent infrastructure, and white-label.
 

@@ -1,7 +1,7 @@
 ---
 /**
  * The 5 Norse-creature sections, in landing order (per LANDING_CONTENT.md):
- * Rata agent 🐿️ · Connectors 🦅 · Gatekeeper 🐺 · Primitives 🦌 · Runtime 🐉
+ * Rata agent 🐿️ · Messengers 🦅 · Connectors 🐺 · Primitives 🦌 · Runtime 🐉
  *
  * Each section's <slot> is left empty for now — the related service/provider
  * cards (Slack, GitHub, Snippet/Widget/…, etc.) will be added later.
@@ -107,31 +107,31 @@ const t = getStrings(locale).sections;
 <ConceptSection
   icon={eagle}
   kicker="Veðrfölnir"
-  title="Connectors"
-  desc={t.connectors.desc}
+  title="Messengers"
+  desc={t.messengers.desc}
 >
   {/* Messaging channels — icons added later */}
   <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
     <FeatureCard
       icon={telegramIcon}
-      title={t.connectors.cards.telegram.title}
-      desc={t.connectors.cards.telegram.desc}
+      title={t.messengers.cards.telegram.title}
+      desc={t.messengers.cards.telegram.desc}
     />
     <FeatureCard
       icon={slackIcon}
-      title={t.connectors.cards.slack.title}
-      desc={t.connectors.cards.slack.desc}
+      title={t.messengers.cards.slack.title}
+      desc={t.messengers.cards.slack.desc}
     />
     <FeatureCard
       icon={whatsappIcon}
-      title={t.connectors.cards.whatsapp.title}
-      desc={t.connectors.cards.whatsapp.desc}
+      title={t.messengers.cards.whatsapp.title}
+      desc={t.messengers.cards.whatsapp.desc}
       disabled
     />
     <FeatureCard
       icon={zaloIcon}
-      title={t.connectors.cards.zalo.title}
-      desc={t.connectors.cards.zalo.desc}
+      title={t.messengers.cards.zalo.title}
+      desc={t.messengers.cards.zalo.desc}
     />
   </div>
   <p class="mt-6 font-mono text-[11px] uppercase tracking-wider text-secondary">
@@ -142,31 +142,31 @@ const t = getStrings(locale).sections;
 <ConceptSection
   icon={wolf}
   kicker="Fenrir"
-  title="Gatekeepers"
-  desc={t.gatekeepers.desc}
+  title="Connectors"
+  desc={t.connectors.desc}
 >
   {/* Four access groups — one card each, icons added later */}
   <div class="grid gap-x-8 gap-y-6 sm:grid-cols-2 items-stretch">
     <FeatureCard
       disabled
       icon={workspaceIcon}
-      title={t.gatekeepers.cards.workspace.title}
-      desc={t.gatekeepers.cards.workspace.desc}
+      title={t.connectors.cards.workspace.title}
+      desc={t.connectors.cards.workspace.desc}
     />
     <FeatureCard
       icon={socialIcon}
-      title={t.gatekeepers.cards.social.title}
-      desc={t.gatekeepers.cards.social.desc}
+      title={t.connectors.cards.social.title}
+      desc={t.connectors.cards.social.desc}
     />
     <FeatureCard
       icon={integrationsIcon}
-      title={t.gatekeepers.cards.integrations.title}
-      desc={t.gatekeepers.cards.integrations.desc}
+      title={t.connectors.cards.integrations.title}
+      desc={t.connectors.cards.integrations.desc}
     />
     <FeatureCard
       icon={yourownIcon}
-      title={t.gatekeepers.cards.yourOwn.title}
-      desc={t.gatekeepers.cards.yourOwn.desc}
+      title={t.connectors.cards.yourOwn.title}
+      desc={t.connectors.cards.yourOwn.desc}
     />
   </div>
   <p class="mt-6 font-mono text-[11px] uppercase tracking-wider text-secondary">
